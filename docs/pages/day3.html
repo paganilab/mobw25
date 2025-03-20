@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2023 Bioinformatics Workshop - Day 3</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href=".././pics/net_icon.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+<script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src=".././pics/net_icon.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">2023 Bioinformatics Workshop</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/day1.html">
+ <span class="menu-text">Day 1</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/day2.html">
+ <span class="menu-text">Day 2</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../pages/day3.html" aria-current="page">
+ <span class="menu-text">Day 3</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/help.html">
+ <span class="menu-text">Help</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/paganilab"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/LabPagani"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives">Objectives</a></li>
+  <li><a href="#differential-expression-analysis" id="toc-differential-expression-analysis" class="nav-link" data-scroll-target="#differential-expression-analysis">Differential Expression Analysis</a>
+  <ul class="collapse">
+  <li><a href="#the-main-edger-function" id="toc-the-main-edger-function" class="nav-link" data-scroll-target="#the-main-edger-function">The Main <code>edgeR</code> Function</a></li>
+  <li><a href="#exploring-results" id="toc-exploring-results" class="nav-link" data-scroll-target="#exploring-results">Exploring Results</a></li>
+  <li><a href="#saving-results" id="toc-saving-results" class="nav-link" data-scroll-target="#saving-results">Saving Results</a></li>
+  <li><a href="#visualizing-results-with-md-plots" id="toc-visualizing-results-with-md-plots" class="nav-link" data-scroll-target="#visualizing-results-with-md-plots">Visualizing Results With MD Plots</a></li>
+  <li><a href="#visualizing-results-with-volcano-plots" id="toc-visualizing-results-with-volcano-plots" class="nav-link" data-scroll-target="#visualizing-results-with-volcano-plots">Visualizing Results With Volcano Plots</a></li>
+  <li><a href="#mapping-ids-to-gene-symbols" id="toc-mapping-ids-to-gene-symbols" class="nav-link" data-scroll-target="#mapping-ids-to-gene-symbols">Mapping IDs to Gene Symbols</a></li>
+  <li><a href="#visualizing-results-with-heatmaps" id="toc-visualizing-results-with-heatmaps" class="nav-link" data-scroll-target="#visualizing-results-with-heatmaps">Visualizing Results With Heatmaps</a></li>
+  </ul></li>
+  <li><a href="#further-downstream-analyses" id="toc-further-downstream-analyses" class="nav-link" data-scroll-target="#further-downstream-analyses">Further Downstream Analyses</a>
+  <ul class="collapse">
+  <li><a href="#gsea" id="toc-gsea" class="nav-link" data-scroll-target="#gsea">GSEA</a></li>
+  <li><a href="#gene-ontology-enrichment-analysis" id="toc-gene-ontology-enrichment-analysis" class="nav-link" data-scroll-target="#gene-ontology-enrichment-analysis">Gene Ontology Enrichment Analysis</a></li>
+  <li><a href="#take-home-messages" id="toc-take-home-messages" class="nav-link" data-scroll-target="#take-home-messages">Take-home Messages 🏠</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Day 3</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="objectives" class="level2">
+<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<ul>
+<li><em>Learn about the theory behind differential expression analysis (DEA)</em></li>
+<li><em>Perform differential expression analysis using <code>edgeR</code></em></li>
+<li><em>Visualize the results</em></li>
+<li><em>Perform further downstream analysis on interesting gene groups</em></li>
+</ul>
+</section>
+<section id="differential-expression-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="differential-expression-analysis">Differential Expression Analysis</h2>
+<p>The main purpose of the steps we performed previously is to <strong>get to this point with a fair knowledge of the data at hand</strong>, all the steps have to be repeated each time one starts with some fresh new data (no data is the same!!). Now we can start performing <strong>differential expression analysis</strong> with the <code>edgeR</code> package. The main concept behind it is to <strong>contrast two categories of our interest in the data (i.e.&nbsp;CD8+ T<sub>ex</sub> vs CD8+ T<sub>rest</sub>) and check which genes are predominantly (defined in a <em>statistical sense</em>) expressed in one category as opposed to the other</strong>. As introduced previously, we tell <code>edgeR</code> which comparisons to perform through the <strong>design formula</strong> we specified above when we created our <code>DGEList</code> object <code>dds</code>. We can recap the design formula that we specified.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the design formula we specified (do not copy this, you should have it in your variable `design`)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">~</span> Donor <span class="sc">+</span> SampleGroup</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>With that design formula we are telling the software that <strong>we are interested in checking for the gene expression differences happening between the categories present in the <code>SampleGroup</code> column</strong> of our <code>samples</code> table <strong>while simultaneously correcting for the possible uninteresting differences that can arise across different donors</strong>, whose information is stored in the <code>Donor</code> column of the <code>samples</code> table which we can check out below. The <code>Donor</code> therefore represents our batch whose effect we are trying to correct for.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:left;"> Donor </th>
+   <th style="text-align:left;"> SampleGroup </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> BSSE_QGF_204446 </td>
+   <td style="text-align:left;"> HD276 </td>
+   <td style="text-align:left;"> Trest </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BSSE_QGF_204447 </td>
+   <td style="text-align:left;"> HD276 </td>
+   <td style="text-align:left;"> Ttumor </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BSSE_QGF_204448 </td>
+   <td style="text-align:left;"> HD276 </td>
+   <td style="text-align:left;"> Teff </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BSSE_QGF_204449 </td>
+   <td style="text-align:left;"> HD276 </td>
+   <td style="text-align:left;"> Tex </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BSSE_QGF_204450 </td>
+   <td style="text-align:left;"> HD280 </td>
+   <td style="text-align:left;"> Trest </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BSSE_QGF_204451 </td>
+   <td style="text-align:left;"> HD280 </td>
+   <td style="text-align:left;"> Ttumor </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>The categories are exactly the ones we have been plotting all along up to this point (the different CD8+ T-cell types).</p>
+<blockquote class="blockquote">
+<p>💡 <strong>Given that we have four differences categories (these are also called <code>levels</code> in <code>R</code>) in our <code>SampleGroup</code> column (which can also be called a <code>factor</code> in <code>R</code>), <code>edgeR</code> could perform different comparisons since these are <em>pairwise</em>.</strong> <strong>We need to keep in mind that our reference values are referred to the CD8+ T<sub>eff</sub> group!</strong></p>
+</blockquote>
+<section id="the-main-edger-function" class="level3">
+<h3 class="anchored" data-anchor-id="the-main-edger-function">The Main <code>edgeR</code> Function</h3>
+<p>Let’s perform differential expression analysis with <code>edgeR</code> on our dataset using the main function for the task in the package, <code>glmTest()</code>. Without going into the mathematical details, this function fits a <strong><a href="https://en.wikipedia.org/wiki/Generalized_linear_model">generalized linear model (GLM)</a></strong> to the data in order to perform inference and <strong>decide which genes are <em>statistically</em> up- or down-regulated</strong>. We first need to compute gene-wise dispersion estimate with the function <code>estimateDisp()</code>. These are needed by the model in order for its underlying assumptions to hold true. We can visually inspect the fit of the dispersion estimates below.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we fit gene-wise dispersion estimates to accomodate the theoretical assumptions of the model</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">estimateDisp</span>(dds, design, <span class="at">robust=</span><span class="cn">TRUE</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the fitted dispersion values</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotBCV</span>(dds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From the dispersion estimate we can see that we are capturing and modelling efficiently the gene-wise dispersion in the dataset which is intrinsically present due to variation. This variation is quantified in <code>edgeR</code> with a <strong>BCV</strong> or a <em><em>B</em>iological <em>C</em>oefficient of <em>V</em>ariation</em> which <strong>takes into account both unwanted biological variability (specified in the design) and technical variation</strong>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the GLM</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">glmFit</span>(dds, design)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform differential expression testing given the design formula we wrote previously</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>lrt <span class="ot">&lt;-</span> <span class="fu">glmLRT</span>(fit, <span class="at">coef=</span><span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Notice how we did not use the transformed version of the dataset (<code>log2dds</code>) but we started from the object <code>dds</code></strong>. As previously mentioned, the package needs to start from <strong>raw count data</strong> to correctly assess differences in gene expression.</p>
+<p><strong>Let’s say that we are very interested in the differences occurring between CD8+ T<sub>ex</sub> and CD8+ T<sub>eff</sub> cells.</strong> The reason why we specified <code>coef=7</code> in the code above is explained by how <code>edgeR</code> interprets the <strong><code>design</code> matrix</strong> that we built previously, which specifies the kinds of comparison to make. If we take a look at it we can see how the <strong><em>7th</em> column is the one related to the T<sub>ex</sub> group</strong>, the one we want to <strong>compare against our reference group T<sub>eff</sub></strong>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(design, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> (Intercept) </th>
+   <th style="text-align:right;"> donorHD280 </th>
+   <th style="text-align:right;"> donorHD286 </th>
+   <th style="text-align:right;"> donorHD287 </th>
+   <th style="text-align:right;"> sample_groupTrest </th>
+   <th style="text-align:right;"> sample_groupTtumor </th>
+   <th style="text-align:right;"> sample_groupTex </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<blockquote class="blockquote">
+<p>💡 <strong>In GLMs, design matrices are built to communicate the way we want to <em>model</em> samples when testing for gene expression differences. Some packages keep this aspect less exposed than other to allow users which are less familiar with the mathematical concepts to still use the package. Often, better knowledge allows better control and flexibility over what we do, at the cost of greater responsibility!</strong></p>
+</blockquote>
+</section>
+<section id="exploring-results" class="level3">
+<h3 class="anchored" data-anchor-id="exploring-results">Exploring Results</h3>
+<p>After having used the main <code>edgeR</code> function, we can actively explore the results of the analysis for the comparisons of our interest. For example we might want to check if any gene is <em>up-regulated</em> during the process of CD8+ T-cell exhaustion. We can later filter the results based adjusted <em>P</em>-value used to <strong>accept or reject the null hypothesis</strong> (<span class="math inline">\(H_{0}\)</span>) of a gene NOT being differentially expressed between the two conditions.</p>
+<p>With the code below we can extract a table that we call <code>res</code> which contains the results for every single gene, stored in separate rows.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the results</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(lrt<span class="sc">$</span>table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can now <strong>check out our results object</strong>, which will be a <code>data.frame</code>, a table.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out results object</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> logFC </th>
+   <th style="text-align:right;"> logCPM </th>
+   <th style="text-align:right;"> LR </th>
+   <th style="text-align:right;"> PValue </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> ENSG00000182888 </td>
+   <td style="text-align:right;"> -0.7030535 </td>
+   <td style="text-align:right;"> -0.9936256 </td>
+   <td style="text-align:right;"> 4.2525633 </td>
+   <td style="text-align:right;"> 0.0391911 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ENSG00000286431 </td>
+   <td style="text-align:right;"> 1.5461179 </td>
+   <td style="text-align:right;"> -0.1530747 </td>
+   <td style="text-align:right;"> 11.8110610 </td>
+   <td style="text-align:right;"> 0.0005888 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ENSG00000101846 </td>
+   <td style="text-align:right;"> 0.2581339 </td>
+   <td style="text-align:right;"> 1.7994127 </td>
+   <td style="text-align:right;"> 1.9918449 </td>
+   <td style="text-align:right;"> 0.1581481 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ENSG00000285679 </td>
+   <td style="text-align:right;"> 0.0118590 </td>
+   <td style="text-align:right;"> -1.7883345 </td>
+   <td style="text-align:right;"> 0.0007381 </td>
+   <td style="text-align:right;"> 0.9783257 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ENSG00000101849 </td>
+   <td style="text-align:right;"> 0.1295766 </td>
+   <td style="text-align:right;"> 6.2607280 </td>
+   <td style="text-align:right;"> 1.2854701 </td>
+   <td style="text-align:right;"> 0.2568844 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ENSG00000047644 </td>
+   <td style="text-align:right;"> 0.4654929 </td>
+   <td style="text-align:right;"> 6.7504933 </td>
+   <td style="text-align:right;"> 14.5868099 </td>
+   <td style="text-align:right;"> 0.0001338 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ENSG00000004961 </td>
+   <td style="text-align:right;"> -0.6228863 </td>
+   <td style="text-align:right;"> 3.7283726 </td>
+   <td style="text-align:right;"> 23.4757372 </td>
+   <td style="text-align:right;"> 0.0000013 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ENSG00000005302 </td>
+   <td style="text-align:right;"> 1.0203073 </td>
+   <td style="text-align:right;"> 6.7934565 </td>
+   <td style="text-align:right;"> 67.0298287 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ENSG00000101911 </td>
+   <td style="text-align:right;"> -0.8501682 </td>
+   <td style="text-align:right;"> 4.8448978 </td>
+   <td style="text-align:right;"> 55.9050804 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ENSG00000229083 </td>
+   <td style="text-align:right;"> -1.4635875 </td>
+   <td style="text-align:right;"> 0.8512208 </td>
+   <td style="text-align:right;"> 10.3340205 </td>
+   <td style="text-align:right;"> 0.0013060 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>We can additionally <strong>print out a summary of the results of the differential analysis at a <em>P</em>-value &lt; 0.05</strong> by using the following code:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">decideTests</span>(lrt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       sample_groupTex
+Down              7046
+NotSig            8714
+Up                6923</code></pre>
+</div>
+</div>
+<p>In here we can see the type of comparison we are performing (vs the reference, in our case CD8+ T<sub>eff</sub> cells), the <em>P</em>-value threshold we used and the number of <strong>up-regulated</strong> and <strong>down-regulated</strong> genes at varying <a href="https://en.wikipedia.org/wiki/Fold_change"><em>log</em>-fold change</a> levels, keep in mind that a log-fold change of 1 corresponds to a difference in raw gene expression value of 2 times since the <em>log</em> has a base of 2. So, to recap, <strong>all of the genes with log-fold change of 1 or more are twice as expressed in one condition compared to the other and we will later filter genes based on the fold-change value</strong>.</p>
+</section>
+<section id="saving-results" class="level3">
+<h3 class="anchored" data-anchor-id="saving-results">Saving Results</h3>
+<p>Let’s <strong>save the results object we just generated in a <code>.csv</code> file</strong>. We can then source it back and load it into the session using the code we have seen at the end of the first day of the workshop.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the results object</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(res, <span class="st">"results.csv"</span>, <span class="at">sep=</span><span class="st">","</span>, <span class="at">quote =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the code below, we will create two new tables with the genes that were up-regulated and down-regulated in the comparison we performed, we will use these later.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the information related to up-regulated and down-regulated genes</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>up_df <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PValue <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&gt;</span> <span class="dv">1</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>down_df <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PValue <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If we <strong>check the table with the up-regulated genes</strong> we can see it has the following structure (we just took some specific rows - <em>genes</em> - of the complete results table corresponding to up-regulated genes):</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(up_df, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> logFC </th>
+   <th style="text-align:right;"> logCPM </th>
+   <th style="text-align:right;"> LR </th>
+   <th style="text-align:right;"> PValue </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> ENSG00000286431 </td>
+   <td style="text-align:right;"> 1.546118 </td>
+   <td style="text-align:right;"> -0.1530747 </td>
+   <td style="text-align:right;"> 11.811061 </td>
+   <td style="text-align:right;"> 0.0005888 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ENSG00000005302 </td>
+   <td style="text-align:right;"> 1.020307 </td>
+   <td style="text-align:right;"> 6.7934565 </td>
+   <td style="text-align:right;"> 67.029829 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ENSG00000176896 </td>
+   <td style="text-align:right;"> 1.483553 </td>
+   <td style="text-align:right;"> 2.7280733 </td>
+   <td style="text-align:right;"> 49.397968 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ENSG00000289449 </td>
+   <td style="text-align:right;"> 1.587543 </td>
+   <td style="text-align:right;"> -1.3504361 </td>
+   <td style="text-align:right;"> 6.001932 </td>
+   <td style="text-align:right;"> 0.0142902 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<blockquote class="blockquote">
+<p>💡 <strong>How would you check if the dimensions of the tables we extracted correspond to the number of differentially expressed genes present in the summary we printed above? (hint: <em>go back and look at how we checked for the number of rows and columns in a table</em>)</strong></p>
+</blockquote>
+</section>
+<section id="visualizing-results-with-md-plots" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-results-with-md-plots">Visualizing Results With MD Plots</h3>
+<p><strong>MD plots are used to get a sense of the proportions of up- and down-regulated genes</strong> between two conditions and the number of counts per million (CPM) of each gene, to check if genes with higher counts are statistically preferred to be also differential.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the MD Plot</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMD</span>(lrt)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">col=</span><span class="st">"gray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>With the gray line we indicate a fold-change of +/- 1 which, if you recall, stands for an <strong>actual magnitude of change of value 2</strong>.</p>
+</section>
+<section id="visualizing-results-with-volcano-plots" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-results-with-volcano-plots">Visualizing Results With Volcano Plots</h3>
+<p>Once we have our results from the comparison, we might want to <strong>present them graphically to aid their interpretation by other people or to emphasize messages of interest within them</strong> (like the statistics only for some genes of interest). One way to visualize results from a differential expression analysis is to draw a <a href="https://en.wikipedia.org/wiki/Volcano_plot_(statistics)"><strong>volcano plot</strong></a>. The goal of a volcano plot is to display and summarize the main metrics of output from a differential expression analysis, these consist of <strong><em>P</em>-values</strong> and <strong>log-fold changes</strong> associated with each gene in the dataset <strong>for the specific comparison we are performing</strong> (T<sub>ex</sub> vs T<sub>eff</sub> in our case). These two variables can be plotted together to get a feel for the overall results in the analysis. Let’s plot a volcano summarizing the results of the comparison we have performed.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the threshold just for visualization!</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>log2FC_val <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>padj_val <span class="ot">=</span> <span class="fl">0.05</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a table with gene information</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>volcano_corr <span class="ot">=</span> <span class="fu">as.data.frame</span>(res) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">names=</span><span class="fu">rownames</span>(res)) <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>()</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a separate column in the table with the information needed to color point in three categories</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>volcano_corr<span class="sc">$</span>threshold<span class="ot">=</span><span class="fu">ifelse</span>(volcano_corr<span class="sc">$</span>logFC <span class="sc">&gt;=</span> log2FC_val <span class="sc">&amp;</span> volcano_corr<span class="sc">$</span>PValue <span class="sc">&lt;</span> padj_val,<span class="st">"A"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">ifelse</span>(volcano_corr<span class="sc">$</span>logFC <span class="sc">&lt;=</span> <span class="sc">-</span>log2FC_val <span class="sc">&amp;</span> volcano_corr<span class="sc">$</span>PValue <span class="sc">&lt;</span> padj_val, <span class="st">"B"</span>,<span class="st">"C"</span>))</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot!</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(volcano_corr, <span class="fu">aes</span>(<span class="at">x=</span>logFC, <span class="at">y =</span><span class="sc">-</span><span class="fu">log10</span>(PValue), <span class="at">color=</span>threshold)) <span class="sc">+</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>( <span class="st">"B"</span><span class="ot">=</span><span class="st">"#3891A6"</span>,<span class="st">"A"</span><span class="ot">=</span><span class="st">"#C52233"</span>, <span class="st">"C"</span><span class="ot">=</span><span class="st">"grey"</span>)) <span class="sc">+</span> </span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"log2(Fold Change)"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"-log10(adj p-value)"</span>) <span class="sc">+</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">0</span>, <span class="at">color=</span><span class="st">'black'</span>) <span class="sc">+</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">color=</span><span class="st">'black'</span>) <span class="sc">+</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>, <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>),</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>                <span class="at">axis.text.y=</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">0</span>),</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>                <span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>),</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>               <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="mapping-ids-to-gene-symbols" class="level3">
+<h3 class="anchored" data-anchor-id="mapping-ids-to-gene-symbols">Mapping IDs to Gene Symbols</h3>
+<p>The volcano plot above is <strong>nice but it is not so informative since we cannot see any gene name</strong>! Unfortunately we do not have recognizable gene names in the <code>res</code> object, as we can see below:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In this case gene names are the names of the rows of our table</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(res)[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "ENSG00000182888" "ENSG00000286431" "ENSG00000101846" "ENSG00000285679"
+ [5] "ENSG00000101849" "ENSG00000047644" "ENSG00000004961" "ENSG00000005302"
+ [9] "ENSG00000101911" "ENSG00000229083" "ENSG00000205542" "ENSG00000261030"
+[13] "ENSG00000226985" "ENSG00000198759" "ENSG00000176896" "ENSG00000123595"
+[17] "ENSG00000046651" "ENSG00000289449" "ENSG00000233247" "ENSG00000130150"</code></pre>
+</div>
+</div>
+<p>We can see that we currently have <a href="https://www.ebi.ac.uk/training/online/courses/ensembl-browsing-genomes/navigating-ensembl/investigating-a-gene/">Ensembl Gene IDs</a> as opposed to <strong>gene symbols</strong>! We can fix this by <strong>converting between the two, this can be achieved in R through dedicated packages like <a href="https://bioconductor.org/packages/release/data/annotation/html/org.Hs.eg.db.html"><code>org.Hs.eg.db</code></a></strong> which map between the two types of gene identifiers. Let’s do it using the code below.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the package for the conversion between Ensembl IDs and Gene Symbols</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(org.Hs.eg.db)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>volcano_corr<span class="sc">$</span>gene_names <span class="ot">&lt;-</span> <span class="fu">mapIds</span>(org.Hs.eg.db, <span class="at">keys=</span><span class="fu">row.names</span>(volcano_corr), <span class="at">column=</span><span class="st">"SYMBOL"</span>, <span class="at">keytype=</span><span class="st">"ENSEMBL"</span>, <span class="at">multiVals=</span><span class="st">"first"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can check that <strong>we now have new mapped gene symbols</strong> that we can use to make our volcano plot informative!</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>volcano_corr<span class="sc">$</span>gene_names[<span class="dv">1</span><span class="sc">:</span><span class="dv">40</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "RPS27AP20"    NA             "STS"          NA             "TBL1X"       
+ [6] "WWC3"         "HCCS"         "MSL3"         "PRPS2"        NA            
+[11] "TMSB4X"       NA             "LINC01203"    "EGFL6"        "TCEANC"      
+[16] "RAB9A"        "OFD1"         NA             NA             "MOSPD2"      
+[21] "CA5BP1"       "CA5B"         "ZRSR2"        NA             "SYAP1"       
+[26] "TXLNG"        "NHS"          "SCML1"        "CDKL5"        NA            
+[31] "LOC101928415" "PDHA1"        "CNKSR2"       "MBTPS2"       "YY2"         
+[36] "SMS"          "PHEX"         NA             "PRDX4"        "SAT1"        </code></pre>
+</div>
+</div>
+<p>And finally we can try to plot again our volcano with the addition of gene names!</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>volcano_corr <span class="ot">&lt;-</span> volcano_corr[<span class="fu">order</span>(volcano_corr<span class="sc">$</span>PValue, <span class="at">decreasing =</span> <span class="cn">FALSE</span>),] <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>()</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>names_list <span class="ot">&lt;-</span> <span class="fu">c</span>(volcano_corr<span class="sc">$</span>gene_names[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>], <span class="st">"TOX"</span>, <span class="st">"ENTPD1"</span>, <span class="st">"HAVCR2"</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>neg_fc <span class="ot">&lt;-</span> volcano_corr[<span class="fu">order</span>(volcano_corr<span class="sc">$</span>logFC, <span class="at">decreasing =</span> <span class="cn">TRUE</span>),] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PValue <span class="sc">&lt;</span> <span class="fl">0.05</span> ) <span class="sc">%&gt;%</span> .<span class="sc">$</span>gene_names <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>) <span class="co"># Change these numbers to avoid overcrowding in the plot</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>pos_fc <span class="ot">&lt;-</span> volcano_corr[<span class="fu">order</span>(volcano_corr<span class="sc">$</span>logFC, <span class="at">decreasing =</span> <span class="cn">FALSE</span>),] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PValue <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span> .<span class="sc">$</span>gene_names <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>names_list <span class="ot">&lt;-</span> <span class="fu">c</span>(names_list, neg_fc, pos_fc)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>volcano_corr <span class="ot">&lt;-</span> volcano_corr <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(., <span class="at">stroke =</span> <span class="fu">ifelse</span>(.<span class="sc">$</span>gene_names <span class="sc">%in%</span> names_list <span class="sc">&amp;</span> volcano_corr<span class="sc">$</span>PValue <span class="sc">&lt;</span> padj_val <span class="sc">&amp;</span> volcano_corr<span class="sc">$</span>logFC <span class="sc">&gt;</span> log2FC_val, <span class="dv">2</span>, <span class="dv">0</span>), </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">names=</span><span class="fu">ifelse</span>(.<span class="sc">$</span>gene_names <span class="sc">%in%</span> names_list,<span class="st">'mark'</span>,<span class="st">'leave'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>                                                    .[<span class="fu">order</span>(.<span class="sc">$</span>names),]</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(volcano_corr, <span class="fu">aes</span>(<span class="at">x=</span>logFC, <span class="at">y =</span><span class="sc">-</span><span class="fu">log10</span>(PValue), <span class="at">color=</span>threshold)) <span class="sc">+</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>( <span class="st">"B"</span><span class="ot">=</span><span class="st">"#3891A6"</span>,<span class="st">"A"</span><span class="ot">=</span><span class="st">"#C52233"</span>, <span class="st">"C"</span><span class="ot">=</span><span class="st">"grey"</span>)) <span class="sc">+</span> </span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"log2(Fold Change)"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"-log10(adj p-value)"</span>) <span class="sc">+</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">0</span>, <span class="at">color=</span><span class="st">'black'</span>) <span class="sc">+</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">color=</span><span class="st">'black'</span>) <span class="sc">+</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>, <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>),</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>                <span class="at">axis.text.y=</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">0</span>),</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>                <span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>),</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>               <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>)) <span class="sc">+</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_label_repel</span>(<span class="at">data=</span>volcano_corr[<span class="fu">which</span>(volcano_corr<span class="sc">$</span>names<span class="sc">==</span><span class="st">'mark'</span> <span class="sc">&amp;</span> volcano_corr<span class="sc">$</span>threshold<span class="sc">==</span><span class="st">'A'</span>),], <span class="fu">aes</span>(<span class="at">label=</span>gene_names), <span class="at">max.overlaps =</span> <span class="dv">30</span>, <span class="at">color=</span><span class="st">'black'</span>, <span class="at">size=</span><span class="dv">4</span>, <span class="at">fill=</span><span class="st">'white'</span>, <span class="at">fontface=</span><span class="st">'italic'</span>) <span class="sc">+</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_label_repel</span>(<span class="at">data=</span>volcano_corr[<span class="fu">which</span>(volcano_corr<span class="sc">$</span>names<span class="sc">==</span><span class="st">'mark'</span> <span class="sc">&amp;</span> volcano_corr<span class="sc">$</span>threshold<span class="sc">==</span><span class="st">'B'</span>),], <span class="fu">aes</span>(<span class="at">label=</span>gene_names), <span class="at">max.overlaps =</span> <span class="dv">30</span>, <span class="at">color=</span><span class="st">'black'</span>, <span class="at">size=</span><span class="dv">4</span>, <span class="at">fill=</span><span class="st">'white'</span>, <span class="at">fontface=</span><span class="st">'italic'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="visualizing-results-with-heatmaps" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-results-with-heatmaps">Visualizing Results With Heatmaps</h3>
+<p>We can also <strong>plot differentially expressed genes in the two conditions of our interest using heatmaps</strong>. In this case we select genes based on their significance and visualize how their expression values change across samples just like we have done earlier.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select conditions to plot, since we are plotting differentially expressed genes, we need to select the two categories in the comparison</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>conds <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Tex"</span>,<span class="st">"Teff"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Take genes</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>diffs <span class="ot">&lt;-</span> <span class="fu">rbind</span>(volcano_corr[volcano_corr<span class="sc">$</span>threshold <span class="sc">==</span> <span class="st">"A"</span>,], volcano_corr[volcano_corr<span class="sc">$</span>threshold <span class="sc">==</span> <span class="st">"B"</span>,])<span class="sc">$</span>gene_names</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract counts from `dds` object</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>mtx <span class="ot">&lt;-</span> <span class="fu">cpm</span>(dds)[,<span class="fu">rownames</span>(samples[<span class="fu">which</span>(samples<span class="sc">$</span>SampleGroup <span class="sc">%in%</span> conds),])]</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset for differential genes </span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">rownames</span>(volcano_corr[<span class="fu">which</span>(volcano_corr<span class="sc">$</span>gene_names <span class="sc">%in%</span> diffs),])</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset matrix for genes of interest</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>mtx <span class="ot">&lt;-</span> mtx[ids,]</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create another table for annotating the heatmap with colors</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(samples[,<span class="fu">c</span>(<span class="st">"Donor"</span>,<span class="st">"SampleGroup"</span>)])</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot with pheatmap</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(mtx, <span class="at">cluster_rows=</span><span class="cn">TRUE</span>, <span class="at">show_rownames=</span><span class="cn">FALSE</span>,</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">cluster_cols=</span><span class="cn">TRUE</span>, <span class="at">annotation_col=</span>df[<span class="fu">which</span>(<span class="fu">rownames</span>(df) <span class="sc">%in%</span> <span class="fu">colnames</span>(mtx)),], <span class="at">scale =</span> <span class="st">"row"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Given that the number of differentially expressed genes can sometimes be very high, <strong>we cannot pretend to explore them manually one by one understanding their function</strong>! As we will see, there are further downstream analyses we can perform to get a sense of <strong><em>trends</em></strong> and <strong><em>pathways</em></strong> activated in the cell type of our interest. These analyses which look at genes in groups or <strong>ontologies</strong> try to match conditions with functions, to better elucidate what is going on inside cells in a specific condition.</p>
+</section>
+</section>
+<section id="further-downstream-analyses" class="level2">
+<h2 class="anchored" data-anchor-id="further-downstream-analyses">Further Downstream Analyses</h2>
+<p>Once we have our differentially expressed genes, we can <strong>perform various downstream analyses to check the functional aspects of the group of genes which are up- or down-regulated</strong> in our condition of interest. In the following sections, we will go through two of these, <strong>Gene Set Enrichment Analysis</strong> (GSEA) and <strong>Gene Ontology Enrichment Analysis</strong> (GO).</p>
+<section id="gsea" class="level3">
+<h3 class="anchored" data-anchor-id="gsea">GSEA</h3>
+<p>Gene Set Enrichment Analaysis was <a href="https://www.pnas.org/doi/10.1073/pnas.0506580102">first published</a> in 2005 as a <strong>method to interpret genome-wide expression profiles from RNA-seq data using sets of genes with known biological functions</strong>. In this sense, GSEA is used to <strong>check at which level a signature of genes is <em>enriched</em> in an expression profile</strong>. We can graphically summarize the steps in GSEA using the following picture, from the original publication.</p>
+<center>
+<p><img src="https://www.pnas.org/cms/10.1073/pnas.0506580102/asset/c5e213a9-4247-4506-bae4-908054152f97/assets/graphic/zpq0370595180001.jpeg" width="500"></p>
+<p><em>GSEA needs two ingredients, a <strong>ranked</strong> gene list from our analysis (for instance genes ordered by log-fold change) and a list of genes with biological relevance (for instance genes known to regulate CD8+ T-cell exhaustion).</em></p>
+</center>
+<p><strong>1.</strong> We start by taking our <strong>list of up- or down- regulated genes</strong> and <strong>order them based on the value of their <em>fold-change</em></strong> so that our list will have genes that change a lot positively at the top and ones that change a lot negatively at the bottom. This will represent our <strong>ranking</strong>.</p>
+<p><strong>2.</strong> We then <strong>take one or more curated and archived <em>gene sets</em> which are related to a biological function</strong> we might be interested in investigating in our dataset.</p>
+<p><strong>3.</strong> Finally we <strong>go through our ranking</strong> from top to bottom <strong>counting the number of times we see a gene which is also in the <em>gene set</em> that we are looking at</strong>. We expect to see genes from a given <strong>gene set</strong> appear at the top of our ranking if that biological function is particularly important in the genes of our ranking.</p>
+<p>Over the years, a collection of curated gene sets called <strong><a href="https://www.gsea-msigdb.org/gsea/msigdb/">MSigDB</a></strong> has been expanded and is now a <strong>great resource</strong> to check which ones are more or less enriched in our data at hand.</p>
+<center>
+<p><img src="../pics/msigdb_screenshot.png" width="700"></p>
+<p><em>The web interface for the MSigDB gene set database</em></p>
+</center>
+<p>In our specific use case, <strong>we are going to run GSEA on the set of up-regulated genes in CD8+ T<sub>ex</sub> cells to check if a gene set of exhaustion is indeed enriched in the genes we have found up-regulated</strong>. For this task we are going to use the <code>fgsea</code> package. In order to extract the gene set without the need to directly download it, we are going to <strong>access MSigDB directly from <code>R</code></strong> using another package called <code>msigdbr</code>.</p>
+<blockquote class="blockquote">
+<p>🚨 <strong>WARNING</strong>: This code that follows might kill your <code>R</code> session inadvertedly. If this happens, don’t panic, and reload the object we saved before! Use the following syntax to get back on track after you resume the session:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a> res <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"results.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a> samples <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"samples_table.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this way you should be all set to successfully run all the code below! 🙌🏻</p>
+</blockquote>
+<section id="extract-msigdb-signatures" class="level4">
+<h4 class="anchored" data-anchor-id="extract-msigdb-signatures">Extract MSigDB Signatures</h4>
+<p>In the following chunk, we use a function from the <code>msigdbr</code> package to extract the gene set of our interest:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(msigdbr)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the gene sets from the MSigDB database</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>immune_gsets <span class="ot">&lt;-</span> <span class="fu">msigdbr</span>(<span class="at">species =</span> <span class="st">"human"</span>, <span class="at">category =</span> <span class="st">"C7"</span>, <span class="at">subcategory =</span> <span class="st">"IMMUNESIGDB"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s see what’s in the <code>immune_gsets</code> object:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at what we fetched from the database</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(immune_gsets, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> gs_cat </th>
+   <th style="text-align:left;"> gs_subcat </th>
+   <th style="text-align:left;"> gs_name </th>
+   <th style="text-align:left;"> gene_symbol </th>
+   <th style="text-align:right;"> entrez_gene </th>
+   <th style="text-align:left;"> ensembl_gene </th>
+   <th style="text-align:left;"> human_gene_symbol </th>
+   <th style="text-align:right;"> human_entrez_gene </th>
+   <th style="text-align:left;"> human_ensembl_gene </th>
+   <th style="text-align:left;"> gs_id </th>
+   <th style="text-align:left;"> gs_pmid </th>
+   <th style="text-align:left;"> gs_geoid </th>
+   <th style="text-align:left;"> gs_exact_source </th>
+   <th style="text-align:left;"> gs_url </th>
+   <th style="text-align:left;"> gs_description </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> C7 </td>
+   <td style="text-align:left;"> IMMUNESIGDB </td>
+   <td style="text-align:left;"> GOLDRATH_EFF_VS_MEMORY_CD8_TCELL_DN </td>
+   <td style="text-align:left;"> ABCA2 </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:left;"> ENSG00000107331 </td>
+   <td style="text-align:left;"> ABCA2 </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:left;"> ENSG00000107331 </td>
+   <td style="text-align:left;"> M3044 </td>
+   <td style="text-align:left;"> 16492737 </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> GSE1000002_1582_200_DN </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> Genes down-regulated in comparison of effector CD8 T cells versus memory CD8 T cells. </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> C7 </td>
+   <td style="text-align:left;"> IMMUNESIGDB </td>
+   <td style="text-align:left;"> GOLDRATH_EFF_VS_MEMORY_CD8_TCELL_DN </td>
+   <td style="text-align:left;"> ABCC5 </td>
+   <td style="text-align:right;"> 10057 </td>
+   <td style="text-align:left;"> ENSG00000114770 </td>
+   <td style="text-align:left;"> ABCC5 </td>
+   <td style="text-align:right;"> 10057 </td>
+   <td style="text-align:left;"> ENSG00000114770 </td>
+   <td style="text-align:left;"> M3044 </td>
+   <td style="text-align:left;"> 16492737 </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> GSE1000002_1582_200_DN </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> Genes down-regulated in comparison of effector CD8 T cells versus memory CD8 T cells. </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> C7 </td>
+   <td style="text-align:left;"> IMMUNESIGDB </td>
+   <td style="text-align:left;"> GOLDRATH_EFF_VS_MEMORY_CD8_TCELL_DN </td>
+   <td style="text-align:left;"> ABHD14A </td>
+   <td style="text-align:right;"> 25864 </td>
+   <td style="text-align:left;"> ENSG00000248487 </td>
+   <td style="text-align:left;"> ABHD14A </td>
+   <td style="text-align:right;"> 25864 </td>
+   <td style="text-align:left;"> ENSG00000248487 </td>
+   <td style="text-align:left;"> M3044 </td>
+   <td style="text-align:left;"> 16492737 </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> GSE1000002_1582_200_DN </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> Genes down-regulated in comparison of effector CD8 T cells versus memory CD8 T cells. </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>We can see that every row is a different gene (the <code>gene_symbol</code> colums) with its associated gene set (<code>gs_name</code> column). We will now extract a gene set related to CD8+ T-cell exhaustion which comes from <a href="https://www.sciencedirect.com/science/article/pii/S1074761307004542?via%3Dihub">this publication</a> and is names <a href="https://www.gsea-msigdb.org/gsea/msigdb/human/geneset/GSE9650_EFFECTOR_VS_EXHAUSTED_CD8_TCELL_DN.html"><code>GSE9650_EFFECTOR_VS_EXHAUSTED_CD8_TCELL_DN</code></a> in the database.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the `immune_gsets` table and take only the genes from the gene set of our interest</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>gene_set_name <span class="ot">&lt;-</span> <span class="st">"GSE9650_EFFECTOR_VS_EXHAUSTED_CD8_TCELL_DN"</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>tex_sig_df <span class="ot">&lt;-</span> immune_gsets <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gs_name <span class="sc">==</span> gene_set_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>How many genes do we have in the gene set that we just isolated? We can check this by looking at the number of rows of this new <code>tex_sig_df</code> table that we generated above using the command <code>nrow(tex_sig_df)</code>. Doing this should result in having 232 genes.</p>
+</section>
+<section id="perform-gsea" class="level4">
+<h4 class="anchored" data-anchor-id="perform-gsea">Perform GSEA</h4>
+<p>Now we can perform GSEA using the <code>fgsea</code> package in <code>R</code>!</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fgsea)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare the ranking based on fold-change, from high (expressed in Tex) to low (expressed in Teff)</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(logFC)) <span class="sc">%&gt;%</span> <span class="fu">rownames</span>()</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>vals <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(logFC)) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(logFC)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set names</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(vals) <span class="ot">&lt;-</span> ids </span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare gene set</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>gset <span class="ot">&lt;-</span> <span class="fu">list</span>(tex_sig_df<span class="sc">$</span>ensembl_gene)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(gset) <span class="ot">&lt;-</span> gene_set_name</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Run GSEA</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>fgseaRes <span class="ot">&lt;-</span> <span class="fu">fgsea</span>(<span class="at">pathways =</span> gset, </span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stats    =</span> vals,</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>                  <span class="at">eps      =</span> <span class="fl">0.0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at results</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>fgseaRes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> pathway </th>
+   <th style="text-align:right;"> pval </th>
+   <th style="text-align:right;"> padj </th>
+   <th style="text-align:right;"> log2err </th>
+   <th style="text-align:right;"> ES </th>
+   <th style="text-align:right;"> NES </th>
+   <th style="text-align:right;"> size </th>
+   <th style="text-align:left;"> leadingEdge </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> GSE9650_EFFECTOR_VS_EXHAUSTED_CD8_TCELL_DN </td>
+   <td style="text-align:right;"> 0.0001384 </td>
+   <td style="text-align:right;"> 0.0001384 </td>
+   <td style="text-align:right;"> 0.5188481 </td>
+   <td style="text-align:right;"> -0.4233808 </td>
+   <td style="text-align:right;"> -1.759765 </td>
+   <td style="text-align:right;"> 144 </td>
+   <td style="text-align:left;"> ENSG00000205002, ENSG00000143333, ENSG00000115008, ENSG00000164251, ENSG00000151012, ENSG00000198369, ENSG00000100285, ENSG00000122877, ENSG00000186827, ENSG00000172301, ENSG00000168209, ENSG00000049249, ENSG00000134202, ENSG00000067208, ENSG00000122378, ENSG00000162692, ENSG00000144935, ENSG00000139318, ENSG00000022267, ENSG00000005189, ENSG00000183814, ENSG00000186187, ENSG00000153234, ENSG00000174500, ENSG00000178695, ENSG00000147383, ENSG00000120699, ENSG00000132326, ENSG00000126778, ENSG00000174307, ENSG00000142453, ENSG00000148834, ENSG00000111142, ENSG00000177425, ENSG00000162775, ENSG00000181019, ENSG00000174437, ENSG00000122140, ENSG00000000971, ENSG00000117595, ENSG00000106546, ENSG00000168298, ENSG00000132305, ENSG00000241468, ENSG00000196388, ENSG00000100473, ENSG00000128791 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>We can now <strong>plot the GSEA results</strong> in the standard way:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot GSEA results</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotEnrichment</span>(gset[[gene_set_name]],</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>               vals) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span>gene_set_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From the GSEA results, we can see that <strong>the current gene set we used is mostly depleted in the differential genes we have in our CD8+ T<sub>ex</sub> vs CD8+ T<sub>eff</sub> comparison</strong>. Given that the gene set comes from a study carried out in mice in a context of chronic viral infection, this might indicate that our current results reflect a different kind of CD8+ T-cell exhaustion observed in the tumor microenvironment of human tumors as opposed to the process happening during viral infection in mice.</p>
+<blockquote class="blockquote">
+<p>💡 <strong>Whenever we use gene sets when testing for enrichment, we have to be sure of <em>where</em> they were isolated in order to avoid misinterpreting results and/or getting to wrong conclusions, like it could have happened in this case!</strong></p>
+</blockquote>
+</section>
+</section>
+<section id="gene-ontology-enrichment-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="gene-ontology-enrichment-analysis">Gene Ontology Enrichment Analysis</h3>
+<p>Next, we will try to <strong>get a more <em>unsupervised</em> look at what kind of biology is happening inside our CD8+ T<sub>ex</sub> cells by performing a Gene Ontology Enrichment analysis</strong>. This will allow us to check which and how many up-regulated genes in CD8+ T<sub>ex</sub> cells are represented in various biological processes. We will do this using the <code>clusterProfiler</code> package in <code>R</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(clusterProfiler)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get up-regulated genes</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> <span class="fu">rownames</span>(up_df)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform gene ontology enrichment</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>ego <span class="ot">&lt;-</span> <span class="fu">enrichGO</span>(<span class="at">gene         =</span> genes,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">OrgDb         =</span> org.Hs.eg.db,</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">keyType       =</span> <span class="st">'ENSEMBL'</span>,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">ont           =</span> <span class="st">"MF"</span>, <span class="co"># Molecular Function, use "BP" or "CC" for Biological Process or Cellular Component</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">pAdjustMethod =</span> <span class="st">"BH"</span>,</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">pvalueCutoff  =</span> <span class="fl">0.05</span>,</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">qvalueCutoff  =</span> <span class="fl">0.05</span>,</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">readable      =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ego)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:left;"> ID </th>
+   <th style="text-align:left;"> Description </th>
+   <th style="text-align:left;"> GeneRatio </th>
+   <th style="text-align:left;"> BgRatio </th>
+   <th style="text-align:right;"> pvalue </th>
+   <th style="text-align:right;"> p.adjust </th>
+   <th style="text-align:right;"> qvalue </th>
+   <th style="text-align:left;"> geneID </th>
+   <th style="text-align:right;"> Count </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> GO:0019957 </td>
+   <td style="text-align:left;"> GO:0019957 </td>
+   <td style="text-align:left;"> C-C chemokine binding </td>
+   <td style="text-align:left;"> 10/1394 </td>
+   <td style="text-align:left;"> 24/20616 </td>
+   <td style="text-align:right;"> 1.60e-06 </td>
+   <td style="text-align:right;"> 0.0012476 </td>
+   <td style="text-align:right;"> 0.0011809 </td>
+   <td style="text-align:left;"> CXCR3/CCR8/CXCR6/CCR3/CCR2/CCR5/CX3CR1/XCR1/CXCR1/ZFP36 </td>
+   <td style="text-align:right;"> 10 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GO:0001637 </td>
+   <td style="text-align:left;"> GO:0001637 </td>
+   <td style="text-align:left;"> G protein-coupled chemoattractant receptor activity </td>
+   <td style="text-align:left;"> 10/1394 </td>
+   <td style="text-align:left;"> 26/20616 </td>
+   <td style="text-align:right;"> 3.80e-06 </td>
+   <td style="text-align:right;"> 0.0012476 </td>
+   <td style="text-align:right;"> 0.0011809 </td>
+   <td style="text-align:left;"> CXCR3/CCR8/CXCR6/CCR3/CCR2/CCR5/CX3CR1/XCR1/CMKLR1/CXCR1 </td>
+   <td style="text-align:right;"> 10 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GO:0004950 </td>
+   <td style="text-align:left;"> GO:0004950 </td>
+   <td style="text-align:left;"> chemokine receptor activity </td>
+   <td style="text-align:left;"> 10/1394 </td>
+   <td style="text-align:left;"> 26/20616 </td>
+   <td style="text-align:right;"> 3.80e-06 </td>
+   <td style="text-align:right;"> 0.0012476 </td>
+   <td style="text-align:right;"> 0.0011809 </td>
+   <td style="text-align:left;"> CXCR3/CCR8/CXCR6/CCR3/CCR2/CCR5/CX3CR1/XCR1/CMKLR1/CXCR1 </td>
+   <td style="text-align:right;"> 10 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GO:0019956 </td>
+   <td style="text-align:left;"> GO:0019956 </td>
+   <td style="text-align:left;"> chemokine binding </td>
+   <td style="text-align:left;"> 11/1394 </td>
+   <td style="text-align:left;"> 33/20616 </td>
+   <td style="text-align:right;"> 6.30e-06 </td>
+   <td style="text-align:right;"> 0.0015561 </td>
+   <td style="text-align:right;"> 0.0014729 </td>
+   <td style="text-align:left;"> CXCR3/CCR8/CXCR6/CCR3/CCR2/CCR5/CX3CR1/XCR1/ITGA4/CXCR1/ZFP36 </td>
+   <td style="text-align:right;"> 11 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GO:0016493 </td>
+   <td style="text-align:left;"> GO:0016493 </td>
+   <td style="text-align:left;"> C-C chemokine receptor activity </td>
+   <td style="text-align:left;"> 9/1394 </td>
+   <td style="text-align:left;"> 23/20616 </td>
+   <td style="text-align:right;"> 9.90e-06 </td>
+   <td style="text-align:right;"> 0.0019595 </td>
+   <td style="text-align:right;"> 0.0018547 </td>
+   <td style="text-align:left;"> CXCR3/CCR8/CXCR6/CCR3/CCR2/CCR5/CX3CR1/XCR1/CXCR1 </td>
+   <td style="text-align:right;"> 9 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GO:0140326 </td>
+   <td style="text-align:left;"> GO:0140326 </td>
+   <td style="text-align:left;"> ATPase-coupled intramembrane lipid transporter activity </td>
+   <td style="text-align:left;"> 6/1394 </td>
+   <td style="text-align:left;"> 11/20616 </td>
+   <td style="text-align:right;"> 3.25e-05 </td>
+   <td style="text-align:right;"> 0.0053729 </td>
+   <td style="text-align:right;"> 0.0050856 </td>
+   <td style="text-align:left;"> ABCB4/ABCB1/ABCA7/ABCA1/ABCA2/ATP8A2 </td>
+   <td style="text-align:right;"> 6 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>Let’s now plot the enrichment values that we got with a <em>graph layout</em>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot results of gene ontology enrichment</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">goplot</span>(ego, <span class="at">firstSigNodes=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now we can also plot the results with what is known as a ranked <strong>dot plot</strong>, here we <strong>encode the significance of the enrichment in the color of the dot</strong>, while its size represent the overlap of the specific gene set with the one we are using to perform the test (our list of up-regulated genes).</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dotplot</span>(ego, <span class="at">showCategory=</span><span class="dv">20</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Dotplot for GO enrichment"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>💡 <strong>GO analyses might highlight very interesting patterns and generate hypotheses, but are many times quite hard to interpret depending also on the biological system we are studying.</strong></p>
+</blockquote>
+</section>
+<section id="take-home-messages" class="level3">
+<h3 class="anchored" data-anchor-id="take-home-messages">Take-home Messages 🏠</h3>
+<p>Congratulations! You got the end of the course and now hopefully <strong>know the main steps of a bulk RNA-seq data analysis workflow</strong>! Some of the <em>key concepts</em> that we have explored during the course can enable us to reach some distilled points of interest:</p>
+<ul>
+<li><p><strong>Design your experiments carefully</strong> with data analysis in mind!</p></li>
+<li><p><strong>Data needs to be carefully explored</strong> to avoid systematic errors in the analyses!</p></li>
+<li><p><strong>Plot and Visualize</strong> as much as possible!</p></li>
+<li><p>Not all information is useful, remeber that <strong>it all depends on the biological question</strong>!</p></li>
+<li><p>Omics outputs are immensely rich and <strong>one experiment can be used to answer a plethora of questions</strong>!</p></li>
+</ul>
+<center>
+<p><strong>And also remember that your computer is always right!</strong></p>
+<div class="tenor-gif-embed" data-postid="15542044" data-share-method="host" data-aspect-ratio="1.44796" data-width="60%">
+<a href="https://tenor.com/view/thumbs-up-nod-okay-gif-15542044">Thumbs Up Nod GIF</a>from <a href="https://tenor.com/search/thumbs+up-gifs">Thumbs Up GIFs</a>
+</div>
+<script type="text/javascript" async="" src="https://tenor.com/embed.js"></script>
+</center>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2023, Jacopo Arrigoni &amp; Mattia Toninelli</div>
+  </div>
+</footer>
+
+
+
+</body></html>
