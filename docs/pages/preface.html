@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mattia Toninelli">
-<meta name="dcterms.date" content="2025-03-19">
+<meta name="dcterms.date" content="2025-03-21">
 
-<title>2025 Bioinformatics Workshop - Introduction</title>
+<title>2025 Bioinformatics Workshop - Preface</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,11 +85,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="../pages/index.html" aria-current="page">
+    <a class="nav-link" href="../pages/index.html">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../pages/preface.html">
+    <a class="nav-link active" href="../pages/preface.html" aria-current="page">
  <span class="menu-text">Preface</span></a>
   </li>  
   <li class="nav-item">
@@ -135,16 +135,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-this-workshop-about" id="toc-what-is-this-workshop-about" class="nav-link active" data-scroll-target="#what-is-this-workshop-about">👋🏻 What is this workshop about?</a></li>
-  <li><a href="#program-outline" id="toc-program-outline" class="nav-link" data-scroll-target="#program-outline">Program Outline</a>
-  <ul class="collapse">
-  <li><a href="#day-1" id="toc-day-1" class="nav-link" data-scroll-target="#day-1">Day 1 🤓</a></li>
-  <li><a href="#day-2" id="toc-day-2" class="nav-link" data-scroll-target="#day-2">Day 2 🧑🏼‍💻</a></li>
-  <li><a href="#day-3" id="toc-day-3" class="nav-link" data-scroll-target="#day-3">Day 3 🧞‍♂️</a></li>
-  <li><a href="#how-to-reach-us" id="toc-how-to-reach-us" class="nav-link" data-scroll-target="#how-to-reach-us">How To Reach Us</a></li>
-  </ul></li>
-  <li><a href="#credits" id="toc-credits" class="nav-link" data-scroll-target="#credits">Credits</a></li>
-  <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license">License</a></li>
+  <li><a href="#bioinfowhattt" id="toc-bioinfowhattt" class="nav-link active" data-scroll-target="#bioinfowhattt">Bioinfowhattt? 🥵</a></li>
+  <li><a href="#but-why-are-we-talking-about-high-throughput-data" id="toc-but-why-are-we-talking-about-high-throughput-data" class="nav-link" data-scroll-target="#but-why-are-we-talking-about-high-throughput-data">But why are we talking about <em>high throughput</em> data? 🤌🏼</a></li>
+  <li><a href="#do-i-need-to-know-how-to-program-computers" id="toc-do-i-need-to-know-how-to-program-computers" class="nav-link" data-scroll-target="#do-i-need-to-know-how-to-program-computers">Do I need to know how to program computers? 🙃</a></li>
+  <li><a href="#what-is-r" id="toc-what-is-r" class="nav-link" data-scroll-target="#what-is-r">What is <code>R</code>? 🤖</a></li>
   </ul>
 </nav>
     </div>
@@ -153,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introduction</h1>
+<h1 class="title">Preface</h1>
 </div>
 
 
@@ -170,7 +164,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 19, 2025</p>
+      <p class="date">March 21, 2025</p>
     </div>
   </div>
   
@@ -180,63 +174,47 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="what-is-this-workshop-about" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-this-workshop-about">👋🏻 What is this workshop about?</h2>
-<p>The course will give an overview on how to <strong>conceptually approach bioinformatics</strong>. During the three days of the course we will dive into a <strong>bulk <em>RNA-seq</em> experiment</strong> and carry out the main steps of a standard data analysis pipeline.</p>
+<section id="bioinfowhattt" class="level2">
+<h2 class="anchored" data-anchor-id="bioinfowhattt">Bioinfowhattt? 🥵</h2>
+<p>Let’s look at what <code>ChatGPT</code> outputs when asked the question: <strong>“What do you think we mean when we say bioinformatics?”</strong></p>
+<blockquote class="blockquote">
+<p>When we say “bioinformatics,” we’re typically referring to the use of <strong>computer science, statistics, and data analysis techniques</strong> to understand complex biological data. This often involves analyzing <strong>genetic sequences</strong> (like DNA or RNA), protein structures, or other molecular biology data to make sense of biological systems, identify patterns, and answer questions related to health, disease, evolution, and more. It’s about <strong>bridging biology with technology</strong> to unlock insights from vast amounts of biological data.</p>
+</blockquote>
+<p><strong>But should we really trust it?</strong></p>
+<p>This course is aimed at giving you a sense of the possibilities and challenges that come with analyzing high-throughput data so that you can get a feeling for what <em>your</em> answer to that question might be!</p>
 <center>
-<p><img src="../pics/rnaseq_workflow.png" width="800"></p>
+<p><img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/bioinformatician.png?raw=true" width="400"></p>
 </center>
 </section>
-<section id="program-outline" class="level1">
-<h1>Program Outline</h1>
-<section id="day-1" class="level2">
-<h2 class="anchored" data-anchor-id="day-1">Day 1 🤓</h2>
-<ul>
-<li>Setup RStudio or Posit</li>
-<li>Get familiar with the Posit interface</li>
-<li>Learn about bulk RNA-seq data processing</li>
-<li>Download the data needed for the workshop</li>
-</ul>
-</section>
-<section id="day-2" class="level2">
-<h2 class="anchored" data-anchor-id="day-2">Day 2 🧑🏼‍💻</h2>
-<ul>
-<li>Learn about data normalization</li>
-<li>Learn about the <code>edgeR</code> package</li>
-<li>Explore different normalization methods</li>
-<li>Normalize the data with functions provided by the <code>edgeR</code> package</li>
-<li>Perform diagnostic and exploratory analysis on the data</li>
-</ul>
-</section>
-<section id="day-3" class="level2">
-<h2 class="anchored" data-anchor-id="day-3">Day 3 🧞‍♂️</h2>
-<ul>
-<li>Learn about the theory behind differential expression analysis</li>
-<li>Perform differential expression analysis using <code>edgeR</code></li>
-<li>Visualize the results</li>
-<li>Perform further downstream analysis on interesting gene groups</li>
-</ul>
-</section>
-<section id="how-to-reach-us" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-reach-us">How To Reach Us</h2>
-<ul>
-<li><code>Anna Beneggi</code> (anna.beneggi@ifom.eu)</li>
-<li><code>Mattia Toninelli</code> (mattia.toninelli@ifom.eu)</li>
-</ul>
+<section id="but-why-are-we-talking-about-high-throughput-data" class="level2">
+<h2 class="anchored" data-anchor-id="but-why-are-we-talking-about-high-throughput-data">But why are we talking about <em>high throughput</em> data? 🤌🏼</h2>
+<p>As we will see, biological phenomena are extremely complex and hard to make sense of! Just think about the sheer size of the information (how much?) contained in our genome in the form of words composed by just 4 letters and the majority of them don’t even mean anything! 🤯</p>
+<p>Later we will dive into the world of <strong>N</strong>ext <strong>G</strong>eneration <strong>S</strong>equencing technologies (NGS) and how they have revolutionized the way we can collect information about the molecules around which life encodes and transfers its information, DNA, RNA and proteins.</p>
 <center>
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2799.3904457401086!2d9.203071399999999!3d45.44178759999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4786c43e4304a3f5%3A0x80ca5dcc8bef68!2sIFOM%20%E2%80%A2%20Istituto%20Fondazione%20di%20Oncologia%20Molecolare%20ETS!5e0!3m2!1sit!2sit!4v1680169870014!5m2!1sit!2sit" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-</iframe>
-<p><strong>Feel free to drop us an e-mail if you have any curiosity or question!</strong></p>
+<p><img src="../pics/throughput.jpeg" width="400"></p>
 </center>
+<p>Given the scale, size and complexity (hence <em>high-throughput</em>) of the data generated by these technologies, human power is not enough to get them processed in a reasonable amount of time… that’s where <strong>dumb computers</strong> come in the picture!</p>
 </section>
+<section id="do-i-need-to-know-how-to-program-computers" class="level2">
+<h2 class="anchored" data-anchor-id="do-i-need-to-know-how-to-program-computers">Do I need to know how to program computers? 🙃</h2>
+<p>In short… YES! But don’t be intimated by this, we will walk through the computer code in the workshop together, trying to <strong>understand it by <em>functionality</em></strong> instead of blindly learning to type some letters on a screen.</p>
+<p>In particular, bioinformatics has historically revolved around the use of <strong>computer terminals</strong> (or command-line, CLI), using a terminal basically feels like looking inside the void soul of your computer, a spot of complete darkness, just like you imagine it.</p>
+<blockquote class="blockquote">
+<p>☠️ If you dare, you can look into the void by typing <kbd>⌘</kbd>+<kbd>Space</kbd> and typing “Terminal” on Mac or <kbd>Win</kbd>+<kbd>R</kbd> -&gt; type “cmd” -&gt; press <kbd>Enter</kbd> on Windows!</p>
+</blockquote>
+<p>Most data-intensive operations in bioinformatics are handled by specialized “tools” (computer programs) that work in this environment, where we need to <em>tell</em> explicitly the computer what to do instead of pushing flashy buttons on the screen, something a bit different than what we are normally used to. This is because your computer’s Operating System is designed to make its use an actually enjoyable experience for you, but deep down everything ends in the void.</p>
+<center>
+<p><a href="https://imgflip.com/i/9o4nco"><img src="https://i.imgflip.com/9o4nco.jpg" title="made at imgflip.com" width="350/"></a></p>
+</center>
+<p>In this workshop we are not going to look at the computer’s terminal archaic way of communicating, we are instead going to instruct our computer on what we want to do by using a more modern and comprehensible language known as <code>R</code>.</p>
 </section>
-<section id="credits" class="level1">
-<h1>Credits</h1>
-<p>Some of the images and inspiration came from other tutorials available online, in particular <a href="https://nbisweden.github.io/workshop-ngsintro/2001/slide_rnaseq.html#1">this work</a> for images and <a href="https://hbctraining.github.io/DGE_workshop/lessons/02_DGE_count_normalization.html">this work</a> for some of the information regarding data normalization. All of the code present within this site was developed and is readily implementable in <a href="https://posit.co/">RStudio</a> using <a href="https://rmarkdown.rstudio.com/">RMarkdown</a>.</p>
-</section>
-<section id="license" class="level1">
-<h1>License</h1>
-<p>All of the material in this course is under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (<em>CC BY 4.0</em>) which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</p>
+<section id="what-is-r" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-r">What is <code>R</code>? 🤖</h2>
+<p><code>R</code> is a <em>programming language</em>, what this means is that some people originally created it as a way for humans to write <strong>code</strong> that can be understood by a computer to perform simple or complex operations! Easy!</p>
+<p>The main objectives of <code>R</code> as a language are to facilitate their users in performing tasks related to statistics and data analysis, including data visualization and representation.</p>
+<blockquote class="blockquote">
+<p>💡 Have you ever heard of programming languages? Do you know any? Have you had any experience with <code>R</code>?</p>
+</blockquote>
 
 
 </section>

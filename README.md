@@ -1,4 +1,4 @@
-# MOBW2023
+# MOBW2025
 
 <img src="./pics/rnaseq_workflow.png" width=600 />
 

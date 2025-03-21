@@ -181,9 +181,7 @@ A bulk RNA-seq experiment is articulated in the following steps:
 
 ::::
 
-## What can we expect when looking at mRNAs?
-
-As you might now, only ....
+> 💡 But why would we look at mRNAs at all? Why not DNA or proteins? As always, the short answer is "_it depends..._"
 
 :::
 
@@ -208,6 +206,20 @@ This means that **strands are sequenced by re-building them** using the natural 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/fCd6B5HRaZ8" title="Illumina SBS sequencing" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 </center>
+
+## How do we go from mRNA to sequences?
+
+:::
+
+::: {}
+
+<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/rnaseq_library_prep.svg" width=400 />
+
+:::
+
+::::
+
+Starting from our precious mRNA molecule that has been isolated from our sample, we transform it into DNA by means of _retrotranscription_, this process creates what is known as **cDNA**. cDNA molecules can be very large and due to technical constraints we need to fragment them into smaller pieces. All these pieces are then ligated to a set of sequences known as **adapters**. As we have seen in the video, adapter sequences are used by the sequencing machine to hibridize cDNA fragments to the flow cell and form sequencing clusters.
 
 ## Raw Sequencing Output
 The **raw output** of any sequencing run consists of a series of sequences (called **_reads_**). These sequences can have varying length based on the run parameters set on the sequencing platform. Nevertheless, **they are made available for humans to read under a standardized file format known as FASTQ**. This is the universally accepted format used to encode sequences after sequencing. An example of real FASTQ file with only two **_reads_** is provided below.
@@ -291,12 +303,17 @@ _Alignment of **trimmed reads** to a reference genome or transcriptome._
 
 </center>
 
+### But what is a reference genome really?
+When we perform an RNA-seq experiment, we need to understand _where_ the millions of reads that we get come from in the genome, in other words, which genes (by being transcribed) contribute to what degree to the amount of signal that we get in each experiment! Since every mRNA (hence cDNA) is different among individuals, we can use a **general** genome which is manually built and onto which we can place our reads to check for matches and mismatches.
+
+> 💡 The Human Genome Project for example released the very first assembled reference genome in 2003, using sequencing data coming from _at least_ 10 different individuals and containing more than 3 billion bases! Currently, the most used "build" of the human genome is the one called GRCh37, released in 2013.
+
 Tools like **[STAR](https://github.com/alexdobin/STAR)** and **[BWA-MEM](https://github.com/lh3/bwa)** are designed to achieve great speed and accuracy for the computationally expensive task of read alignment.
 
 The results of the alignment procedure is a different set of files in _SAM_ (Standard Alignment Map) format which get compressed into their binary representation, **BAM files**. These are usually one for each analyzed sample and encode the position of all the identified reads along the genome as well as alignment quality metrics for QC, which can be carried out with tools like **[MultiQC](https://multiqc.info/)**.
 
 > 💡
-> All of these pre-processing steps, which are _computationally expensive_, are usually integrated in pipelines which **connect inputs and outputs of these difference procedures in a streamlined manner**. An example is the RNA-seq pipeline provided by the [nf-core](https://nf-co.re/rnaseq) community.
+> All of these pre-processing steps, which are _computationally expensive_, are usually integrated in command-line pipelines which **connect inputs and outputs of these difference procedures in a streamlined manner**. An example is the RNA-seq pipeline provided by the [nf-core](https://nf-co.re/rnaseq) community.
 
 ## Counting Transcripts
 After sequences have been aligned to their respective place on the genome, it is time to actually count how many times a given sequence is found on any given gene (or transcripts, or exons or others..), **this will actually be our gene expression measurement!**
@@ -316,9 +333,19 @@ These are usually summarized in a table, called _gene expression table_, where *
 > **What is the difference between a _gene_ and a _transcript_?**
 
 # Data Loading and Exploratory Analyses
-## Loading The Data
-We will load a table of data from [this study](https://www.nature.com/articles/s41467-022-35583-w#Sec53) on tumor-infiltrating CD8+ T-cells. The original data supporting the findings of the study has been deposited on the **Gene Expression Omnibus** (GEO) data portal under accession number [GSE120575](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE120575). This is the **place where all studies publish the _processed_ sequencing data from their analysis** in order for other researchers to download it and reproduce their findings or test their own hypotheses.
 
+## What data are we going to use? What is our question?
+We will load a table of data from [this study](https://www.nature.com/articles/s41467-022-35583-w) on tumor-infiltrating CD8+ T-cells. The original data supporting the findings of the study has been deposited on the **Gene Expression Omnibus** (GEO) data portal under accession number [GSE120575](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE120575). This is the **place where all studies publish the _processed_ sequencing data from their analysis** in order for other researchers to download it and reproduce their findings or test their own hypotheses.
+
+<center>
+
+<img src="../pics/ga_gse120575.png" width=400 />
+
+</center>
+
+Briefly, the authors collected bulk RNA-seq data from different subpopulations of transgenic CD8+ T cells including ones known as _exhausted_ which are particularly relevant in the context of cancer immunotherapy. These cells are in fact consistently exposed to antigens in the tumor microenvironment and become dysfunctional, unable to fight cancer cells which are therefore free to keep expanding. Understanding and preventing the process of T cell exhaustion poses and interesting and relevant challenge in the field of immunotherapies for a variety of cancer types.
+
+## Loading The Data
 **We have already downloaded the data and inserted it in a Google Drive [folder](https://drive.google.com/drive/folders/18Rqj2hQ_KAjGVtN8fy2wdvbCUI2c6ruE?usp=sharing) organizing it as follows:**
 
 - `raw_counts.csv`: the gene by sample matrix containing the number of times each gene is detected in each sample (our gene expression values)
@@ -337,7 +364,7 @@ library("dplyr")
 library("googledrive")
 
 # Load files
-files <- drive_ls(path="MOBW2023")
+files <- drive_ls(path="MOBW2025")
 
 # File paths with URL
 counts <- files[files$name == "raw_counts.csv",] %>% drive_read_string() %>% read.csv(text = .) %>% as.data.frame()
@@ -375,6 +402,10 @@ We can see that our table contains count information for `r dim(counts)[1]` gene
 
 We can also inspect the **metadata** from the samples which is stored in the `samples` variable we created above.
 
+## Exploring _meta_data
+Metadata refers to that _class of accessory data_ to the main experimental readout. In the case of this published dataset, the _main_ data refers to the actual gene expression table with the associated counts measurement for each sample. Each sample then has associated information used to further describe it (e.g. type of cells, patient ID, treatment status, experimental batch...), as we have previously seen, this information is instrumental to bioinformaticians to avoid pitfalls in the analysis.
+In the case of our data, this information is contained in the `samples` table. We can use `R`'s functionality to explore it and visualize it in order to get an idea about the dataset!
+
 ```{r, eval=FALSE}
 # What does the table look like?
 samples
@@ -390,7 +421,12 @@ samples %>% kbl() %>% kable_styling()
 dim(samples)
 ```
 
-In this case, this `samples` table has as many rows (`r nrow(samples)`) as there are samples (which in turn is equal to the number of columns in the `counts` table), with columns containing different types of information related to each of the samples in the analysis. 
+In this case, this `samples` table has as many rows (`r nrow(samples)`) as there are samples (which in turn is equal to the number of columns in the `counts` table), with columns containing different types of information related to each of the samples in the analysis.
+
+### Making graphs and figures in `R`
+We can take advantage of the way `R` handles tabular data to easily plot information and get a **visual sense** of the dataset. Exploring data in this way is very important, it allows us to detect flaws and weird effects in the data early on, so to avoid any misinterpretation which can greatly impact downstream analysis. For example, taking our `samples` table, we can ask whether **covariates** are balanced in the data or some categories are more/less represented than others.
+
+For example, let's say we want to understand 
 
 ## Saving/Loading Files
 **Let's save this object with samples information in a file on this cloud session**, this might be needed later if we end up in some trouble with the `R` session! This is a file format where columns are separated by commas. You might be familiar with this format if you have worked quite a bit in Excel. In `R`, we can save tabular data with the `write.table()` function specifying the location (the file name) we want. This is **useful in the case our `R` session dies or we decide to interrupt it**. In this case we will not have to run the whole analysis from the beginning and we can just source the file and load it!

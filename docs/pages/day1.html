@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2023 Bioinformatics Workshop - Day 1</title>
+<title>2025 Bioinformatics Workshop - Day 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -140,7 +140,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <img src=".././pics/net_icon.png" alt="" class="navbar-logo">
     </a>
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">2023 Bioinformatics Workshop</span>
+    <span class="navbar-title">2025 Bioinformatics Workshop</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -151,6 +151,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li class="nav-item">
     <a class="nav-link" href="../pages/index.html">
  <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/preface.html">
+ <span class="menu-text">Preface</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="../pages/day1.html" aria-current="page">
@@ -211,14 +215,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#introduction-to-bulk-rna-seq" id="toc-introduction-to-bulk-rna-seq" class="nav-link" data-scroll-target="#introduction-to-bulk-rna-seq">Introduction to bulk RNA-seq</a>
   <ul class="collapse">
   <li><a href="#next-generation-sequencing" id="toc-next-generation-sequencing" class="nav-link" data-scroll-target="#next-generation-sequencing">Next Generation Sequencing</a></li>
+  <li><a href="#how-do-we-go-from-mrna-to-sequences" id="toc-how-do-we-go-from-mrna-to-sequences" class="nav-link" data-scroll-target="#how-do-we-go-from-mrna-to-sequences">How do we go from mRNA to sequences?</a></li>
   <li><a href="#raw-sequencing-output" id="toc-raw-sequencing-output" class="nav-link" data-scroll-target="#raw-sequencing-output">Raw Sequencing Output</a></li>
   <li><a href="#quality-metrics-inspection" id="toc-quality-metrics-inspection" class="nav-link" data-scroll-target="#quality-metrics-inspection">Quality Metrics Inspection</a></li>
-  <li><a href="#read-alignment" id="toc-read-alignment" class="nav-link" data-scroll-target="#read-alignment">Read Alignment</a></li>
+  <li><a href="#read-alignment" id="toc-read-alignment" class="nav-link" data-scroll-target="#read-alignment">Read Alignment</a>
+  <ul class="collapse">
+  <li><a href="#but-what-is-a-reference-genome-really" id="toc-but-what-is-a-reference-genome-really" class="nav-link" data-scroll-target="#but-what-is-a-reference-genome-really">But what is a reference genome really?</a></li>
+  </ul></li>
   <li><a href="#counting-transcripts" id="toc-counting-transcripts" class="nav-link" data-scroll-target="#counting-transcripts">Counting Transcripts</a></li>
   </ul></li>
   <li><a href="#data-loading-and-exploratory-analyses" id="toc-data-loading-and-exploratory-analyses" class="nav-link" data-scroll-target="#data-loading-and-exploratory-analyses">Data Loading and Exploratory Analyses</a>
   <ul class="collapse">
+  <li><a href="#what-data-are-we-going-to-use-what-is-our-question" id="toc-what-data-are-we-going-to-use-what-is-our-question" class="nav-link" data-scroll-target="#what-data-are-we-going-to-use-what-is-our-question">What data are we going to use? What is our question?</a></li>
   <li><a href="#loading-the-data" id="toc-loading-the-data" class="nav-link" data-scroll-target="#loading-the-data">Loading The Data</a></li>
+  <li><a href="#exploring-_meta_data" id="toc-exploring-_meta_data" class="nav-link" data-scroll-target="#exploring-_meta_data">Exploring _meta_data</a>
+  <ul class="collapse">
+  <li><a href="#making-graphs-and-figures-in-r" id="toc-making-graphs-and-figures-in-r" class="nav-link" data-scroll-target="#making-graphs-and-figures-in-r">Making graphs and figures in <code>R</code></a></li>
+  </ul></li>
   <li><a href="#savingloading-files" id="toc-savingloading-files" class="nav-link" data-scroll-target="#savingloading-files">Saving/Loading Files</a></li>
   </ul></li>
   </ul>
@@ -400,9 +413,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 <div>
-<p><img src="https://nbisweden.github.io/workshop-ngsintro/2001/data/rnaseq/rnaseq_library_prep.svg" width="400"></p>
+<p><img src="https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/assets/rnaseq_workflow.svg" width="400"></p>
 </div>
 </div>
+<blockquote class="blockquote">
+<p>💡 But why would we look at mRNAs at all? Why not DNA or proteins? As always, the short answer is “<em>it depends…</em>”</p>
+</blockquote>
+<p>:::</p>
+<div>
+<p><img src="https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/assets/rnaseq_transcription.svg" width="400"></p>
+</div>
+<p>::::</p>
 <section id="next-generation-sequencing" class="level2">
 <h2 class="anchored" data-anchor-id="next-generation-sequencing">Next Generation Sequencing</h2>
 <p>Next Generation Sequencing technologies (Illumina/PacBio) allow experimenters to capture the entire genetic information in a sample in a completely unsupervised manner. The process works with an approach called <strong>sequencing-by-synthesis</strong> or SBS for short.</p>
@@ -414,6 +435,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <iframe width="560" height="315" src="https://www.youtube.com/embed/fCd6B5HRaZ8" title="Illumina SBS sequencing" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
 </center>
+</section>
+<section id="how-do-we-go-from-mrna-to-sequences" class="level2">
+<h2 class="anchored" data-anchor-id="how-do-we-go-from-mrna-to-sequences">How do we go from mRNA to sequences?</h2>
+<p>:::</p>
+<div>
+<p><img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/rnaseq_library_prep.svg" width="400"></p>
+</div>
+<p>::::</p>
+<p>Starting from our precious mRNA molecule that has been isolated from our sample, we transform it into DNA by means of <em>retrotranscription</em>, this process creates what is known as <strong>cDNA</strong>. cDNA molecules can be very large and due to technical constraints we need to fragment them into smaller pieces. All these pieces are then ligated to a set of sequences known as <strong>adapters</strong>. As we have seen in the video, adapter sequences are used by the sequencing machine to hibridize cDNA fragments to the flow cell and form sequencing clusters.</p>
 </section>
 <section id="raw-sequencing-output" class="level2">
 <h2 class="anchored" data-anchor-id="raw-sequencing-output">Raw Sequencing Output</h2>
@@ -437,42 +467,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="quality-metrics-inspection">Quality Metrics Inspection</h2>
 <p>Computational tools like <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a> aid with the <strong>visual inspection of per-sample quality metrics</strong> from NGS experiments. Some of the QC metrics of interest to consider include the ones listed below, on the <strong>left</strong> are optimal metric profiles while on the <strong>right</strong> are sub-optimal ones:</p>
 <center>
-<p><strong>Per-base Sequence Quality</strong> <img src="https://nbisweden.github.io/workshop-ngsintro/2001/data/rnaseq/pbsq.jpg" width="800"> <em>This uses <strong>box plots</strong> to highlight the per-base quality along all <strong>reads in the sequencing experiment, we can notice a physiological drop in quality towards the end part of the read</strong>.</em></p>
+<p><strong>Per-base Sequence Quality</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/pbsq.jpg" width="800"> <em>This uses <strong>box plots</strong> to highlight the per-base quality along all <strong>reads in the sequencing experiment, we can notice a physiological drop in quality towards the end part of the read</strong>.</em></p>
 </center>
 <center>
-<p><strong>Per-sequence Quality Scores</strong> <img src="https://nbisweden.github.io/workshop-ngsintro/2001/data/rnaseq/psqs.jpg" width="800"> <em>Here we are plotting the <strong>distribution of Phred scores</strong> across all identified sequences, we can see that the high quality experiment (left) has a peak at higher Phred scores values (34-38).</em></p>
+<p><strong>Per-sequence Quality Scores</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/psqs.jpg" width="800"> <em>Here we are plotting the <strong>distribution of Phred scores</strong> across all identified sequences, we can see that the high quality experiment (left) has a peak at higher Phred scores values (34-38).</em></p>
 </center>
 <center>
-<p><strong>Per-base Sequence Content</strong> <img src="https://nbisweden.github.io/workshop-ngsintro/2001/data/rnaseq/pbsc.jpg" width="800"> <em>Here we check the sequence (read) base content, in a normal scenario we do not expect any dramatic variation across the full length of the read since we should see a quasi-balanced distribution of bases.</em></p>
+<p><strong>Per-base Sequence Content</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/pbsc.jpg" width="800"> <em>Here we check the sequence (read) base content, in a normal scenario we do not expect any dramatic variation across the full length of the read since we should see a quasi-balanced distribution of bases.</em></p>
 </center>
 <center>
-<p><strong>Per-sequence GC Content</strong> <img src="https://nbisweden.github.io/workshop-ngsintro/2001/data/rnaseq/psgc.jpg" width="800"> <em>GC-content referes to the <strong>degree at which guanosine and cytosine are present within a sequence</strong>, in NGS experiments which also include PCR amplification this aspect is crucial to check since GC-poor sequences may be enriched due to their easier <strong>amplification bias</strong>. In a normal random library we would expect this to have a bell-shaped distribution such as the one on the left.</em></p>
+<p><strong>Per-sequence GC Content</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/psgc.jpg" width="800"> <em>GC-content referes to the <strong>degree at which guanosine and cytosine are present within a sequence</strong>, in NGS experiments which also include PCR amplification this aspect is crucial to check since GC-poor sequences may be enriched due to their easier <strong>amplification bias</strong>. In a normal random library we would expect this to have a bell-shaped distribution such as the one on the left.</em></p>
 </center>
 <center>
-<p><strong>Sequence Duplication Levels</strong> <img src="https://nbisweden.github.io/workshop-ngsintro/2001/data/rnaseq/sdl.jpg" width="800"> <em>This plot shows the degree of sequence duplication levels. In a normal library (left) we <strong>expect to have low levels of duplication</strong> which can be a positive indicator of high sequencing coverage.</em></p>
+<p><strong>Sequence Duplication Levels</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/sdl.jpg" width="800"> <em>This plot shows the degree of sequence duplication levels. In a normal library (left) we <strong>expect to have low levels of duplication</strong> which can be a positive indicator of high sequencing coverage.</em></p>
 </center>
 <center>
-<p><strong>Adapter Content</strong> <img src="https://nbisweden.github.io/workshop-ngsintro/2001/data/rnaseq/ac.jpg" width="800"> <em>In NGS experiments we use <strong>adapters</strong> to create a library. Sometimes these can get sequenced accidentally and end up being part of a <strong>read</strong>. This phenomenon can be spotted here and corrected later using a computational approach called <strong>adapter trimming</strong>, visible in next section’s figure.</em></p>
+<p><strong>Adapter Content</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/ac.jpg" width="800"> <em>In NGS experiments we use <strong>adapters</strong> to create a library. Sometimes these can get sequenced accidentally and end up being part of a <strong>read</strong>. This phenomenon can be spotted here and corrected later using a computational approach called <strong>adapter trimming</strong>, visible in next section’s figure.</em></p>
 </center>
 </section>
 <section id="read-alignment" class="level2">
 <h2 class="anchored" data-anchor-id="read-alignment">Read Alignment</h2>
 <p>Once we are satisfied with the quality of our pool of sequences, we need to <strong>map them back to the transcripts to which they belonged originally when we produced cDNA molecules from RNA</strong>. This process of mapping is <strong>needed to understand from which genes were transcripts generated</strong> and therefore is an essential and very important step of data processing!</p>
 <center>
-<p><img src="https://nbisweden.github.io/workshop-ngsintro/2001/data/rnaseq/rnaseq_mapping.svg" width="700"></p>
+<p><img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/rnaseq_mapping.svg" width="700"></p>
 <p><em>Alignment of <strong>trimmed reads</strong> to a reference genome or transcriptome.</em></p>
 </center>
+<section id="but-what-is-a-reference-genome-really" class="level3">
+<h3 class="anchored" data-anchor-id="but-what-is-a-reference-genome-really">But what is a reference genome really?</h3>
+<p>When we perform an RNA-seq experiment, we need to understand <em>where</em> the millions of reads that we get come from in the genome, in other words, which genes (by being transcribed) contribute to what degree to the amount of signal that we get in each experiment! Since every mRNA (hence cDNA) is different among individuals, we can use a <strong>general</strong> genome which is manually built and onto which we can place our reads to check for matches and mismatches.</p>
+<blockquote class="blockquote">
+<p>💡 The Human Genome Project for example released the very first assembled reference genome in 2003, using sequencing data coming from <em>at least</em> 10 different individuals and containing more than 3 billion bases! Currently, the most used “build” of the human genome is the one called GRCh37, released in 2013.</p>
+</blockquote>
 <p>Tools like <strong><a href="https://github.com/alexdobin/STAR">STAR</a></strong> and <strong><a href="https://github.com/lh3/bwa">BWA-MEM</a></strong> are designed to achieve great speed and accuracy for the computationally expensive task of read alignment.</p>
 <p>The results of the alignment procedure is a different set of files in <em>SAM</em> (Standard Alignment Map) format which get compressed into their binary representation, <strong>BAM files</strong>. These are usually one for each analyzed sample and encode the position of all the identified reads along the genome as well as alignment quality metrics for QC, which can be carried out with tools like <strong><a href="https://multiqc.info/">MultiQC</a></strong>.</p>
 <blockquote class="blockquote">
-<p>💡 All of these pre-processing steps, which are <em>computationally expensive</em>, are usually integrated in pipelines which <strong>connect inputs and outputs of these difference procedures in a streamlined manner</strong>. An example is the RNA-seq pipeline provided by the <a href="https://nf-co.re/rnaseq">nf-core</a> community.</p>
+<p>💡 All of these pre-processing steps, which are <em>computationally expensive</em>, are usually integrated in command-line pipelines which <strong>connect inputs and outputs of these difference procedures in a streamlined manner</strong>. An example is the RNA-seq pipeline provided by the <a href="https://nf-co.re/rnaseq">nf-core</a> community.</p>
 </blockquote>
+</section>
 </section>
 <section id="counting-transcripts" class="level2">
 <h2 class="anchored" data-anchor-id="counting-transcripts">Counting Transcripts</h2>
 <p>After sequences have been aligned to their respective place on the genome, it is time to actually count how many times a given sequence is found on any given gene (or transcripts, or exons or others..), <strong>this will actually be our gene expression measurement!</strong></p>
 <center>
-<p><img src="https://nbisweden.github.io/workshop-ngsintro/2001/data/rnaseq/rnaseq_counts.svg" width="350"></p>
+<p><img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/rnaseq_counts.svg" width="350"></p>
 </center>
 <p>There are many ways to achieve this task but among the most used is the <a href="https://subread.sourceforge.net/featureCounts.html"><code>featureCounts</code></a> tool. In the end, for every sample, we will end up with a number for each gene (or transcripts), these are called <strong>gene (transcript) counts</strong>.</p>
 <p>These are usually summarized in a table, called <em>gene expression table</em>, where <strong>each sample is a column and each row a different gene</strong>. We will now load one and take a closer look, this will be our starting point in the hands-on analysis of bulk RNA-seq data.</p>
@@ -483,9 +520,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="data-loading-and-exploratory-analyses" class="level1">
 <h1>Data Loading and Exploratory Analyses</h1>
+<section id="what-data-are-we-going-to-use-what-is-our-question" class="level2">
+<h2 class="anchored" data-anchor-id="what-data-are-we-going-to-use-what-is-our-question">What data are we going to use? What is our question?</h2>
+<p>We will load a table of data from <a href="https://www.nature.com/articles/s41467-022-35583-w">this study</a> on tumor-infiltrating CD8+ T-cells. The original data supporting the findings of the study has been deposited on the <strong>Gene Expression Omnibus</strong> (GEO) data portal under accession number <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE120575">GSE120575</a>. This is the <strong>place where all studies publish the <em>processed</em> sequencing data from their analysis</strong> in order for other researchers to download it and reproduce their findings or test their own hypotheses.</p>
+<center>
+<p><img src="../pics/ga_gse120575.png" width="400"></p>
+</center>
+<p>Briefly, the authors collected bulk RNA-seq data from different subpopulations of transgenic CD8+ T cells including ones known as <em>exhausted</em> which are particularly relevant in the context of cancer immunotherapy. These cells are in fact consistently exposed to antigens in the tumor microenvironment and become dysfunctional, unable to fight cancer cells which are therefore free to keep expanding. Understanding and preventing the process of T cell exhaustion poses and interesting and relevant challenge in the field of immunotherapies for a variety of cancer types.</p>
+</section>
 <section id="loading-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="loading-the-data">Loading The Data</h2>
-<p>We will load a table of data from <a href="https://www.nature.com/articles/s41467-022-35583-w#Sec53">this study</a> on tumor-infiltrating CD8+ T-cells. The original data supporting the findings of the study has been deposited on the <strong>Gene Expression Omnibus</strong> (GEO) data portal under accession number <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE120575">GSE120575</a>. This is the <strong>place where all studies publish the <em>processed</em> sequencing data from their analysis</strong> in order for other researchers to download it and reproduce their findings or test their own hypotheses.</p>
 <p><strong>We have already downloaded the data and inserted it in a Google Drive <a href="https://drive.google.com/drive/folders/18Rqj2hQ_KAjGVtN8fy2wdvbCUI2c6ruE?usp=sharing">folder</a> organizing it as follows:</strong></p>
 <ul>
 <li><p><code>raw_counts.csv</code>: the gene by sample matrix containing the number of times each gene is detected in each sample (our gene expression values)</p></li>
@@ -493,7 +537,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Open the folder through your Google Drive (<strong>this step is important</strong>), check the presence of the files in the browser and then only AFTER having done this, run the code below. After having opened the Google Drive folder, follow the code chunk below where we are going to load the data and <strong>create two new variables in our <code>R</code> session</strong>, one for each table.</p>
 <blockquote class="blockquote">
-<p>🚨 <strong>NOTE</strong>: After you run the code below, look into your <code>R</code> console and check if you are prompted to insert your Google account information. Do so and then follow the instructions to connect to your Google account in order to download the data from the shared MOBW2023 folder!</p>
+<p>🚨 <strong>NOTE</strong>: After you run the code below, look into your <code>R</code> console and check if you are prompted to insert your Google account information. Do so and then follow the instructions to connect to your Google account in order to download the data from the shared MOBW2025 folder!</p>
 </blockquote>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load installed packages with the "library()" function</span></span>
@@ -501,7 +545,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"googledrive"</span>)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load files</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">drive_ls</span>(<span class="at">path=</span><span class="st">"MOBW2023"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">drive_ls</span>(<span class="at">path=</span><span class="st">"MOBW2025"</span>)</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># File paths with URL</span></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> files[files<span class="sc">$</span>name <span class="sc">==</span> <span class="st">"raw_counts.csv"</span>,] <span class="sc">%&gt;%</span> <span class="fu">drive_read_string</span>() <span class="sc">%&gt;%</span> <span class="fu">read.csv</span>(<span class="at">text =</span> .) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
@@ -751,6 +795,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>💡 <strong>In R, these table object are called <code>data.frames</code>, <code>tibbles</code> are just like them but with some improved functionalities provided by the <a href="https://www.tidyverse.org/"><code>tidyverse</code></a> library.</strong></p>
 </blockquote>
 <p>We can also inspect the <strong>metadata</strong> from the samples which is stored in the <code>samples</code> variable we created above.</p>
+</section>
+<section id="exploring-_meta_data" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-_meta_data">Exploring _meta_data</h2>
+<p>Metadata refers to that <em>class of accessory data</em> to the main experimental readout. In the case of this published dataset, the <em>main</em> data refers to the actual gene expression table with the associated counts measurement for each sample. Each sample then has associated information used to further describe it (e.g.&nbsp;type of cells, patient ID, treatment status, experimental batch…), as we have previously seen, this information is instrumental to bioinformaticians to avoid pitfalls in the analysis. In the case of our data, this information is contained in the <code>samples</code> table. We can use <code>R</code>’s functionality to explore it and visualize it in order to get an idea about the dataset!</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What does the table look like?</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>samples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -877,6 +925,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>In this case, this <code>samples</code> table has as many rows (16) as there are samples (which in turn is equal to the number of columns in the <code>counts</code> table), with columns containing different types of information related to each of the samples in the analysis.</p>
+<section id="making-graphs-and-figures-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="making-graphs-and-figures-in-r">Making graphs and figures in <code>R</code></h3>
+<p>We can take advantage of the way <code>R</code> handles tabular data to easily plot information and get a <strong>visual sense</strong> of the dataset. Exploring data in this way is very important, it allows us to detect flaws and weird effects in the data early on, so to avoid any misinterpretation which can greatly impact downstream analysis. For example, taking our <code>samples</code> table, we can ask whether <strong>covariates</strong> are balanced in the data or some categories are more/less represented than others.</p>
+<p>For example, let’s say we want to understand</p>
+</section>
 </section>
 <section id="savingloading-files" class="level2">
 <h2 class="anchored" data-anchor-id="savingloading-files">Saving/Loading Files</h2>
@@ -1034,7 +1087,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2023, Jacopo Arrigoni &amp; Mattia Toninelli</div>
+      <div class="nav-footer-center">Copyright 2025, Anna Beneggi &amp; Mattia Toninelli</div>
   </div>
 </footer>
 
