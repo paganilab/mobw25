@@ -214,6 +214,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#introduction-to-bulk-rna-seq" id="toc-introduction-to-bulk-rna-seq" class="nav-link" data-scroll-target="#introduction-to-bulk-rna-seq">Introduction to bulk RNA-seq</a>
   <ul class="collapse">
+  <li><a href="#experimental-workflow" id="toc-experimental-workflow" class="nav-link" data-scroll-target="#experimental-workflow">Experimental Workflow</a></li>
   <li><a href="#next-generation-sequencing" id="toc-next-generation-sequencing" class="nav-link" data-scroll-target="#next-generation-sequencing">Next Generation Sequencing</a></li>
   <li><a href="#how-do-we-go-from-mrna-to-sequences" id="toc-how-do-we-go-from-mrna-to-sequences" class="nav-link" data-scroll-target="#how-do-we-go-from-mrna-to-sequences">How do we go from mRNA to sequences?</a></li>
   <li><a href="#raw-sequencing-output" id="toc-raw-sequencing-output" class="nav-link" data-scroll-target="#raw-sequencing-output">Raw Sequencing Output</a></li>
@@ -228,7 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#what-data-are-we-going-to-use-what-is-our-question" id="toc-what-data-are-we-going-to-use-what-is-our-question" class="nav-link" data-scroll-target="#what-data-are-we-going-to-use-what-is-our-question">What data are we going to use? What is our question?</a></li>
   <li><a href="#loading-the-data" id="toc-loading-the-data" class="nav-link" data-scroll-target="#loading-the-data">Loading The Data</a></li>
-  <li><a href="#exploring-_meta_data" id="toc-exploring-_meta_data" class="nav-link" data-scroll-target="#exploring-_meta_data">Exploring _meta_data</a>
+  <li><a href="#exploring-metadata" id="toc-exploring-metadata" class="nav-link" data-scroll-target="#exploring-metadata">Exploring Metadata</a>
   <ul class="collapse">
   <li><a href="#making-graphs-and-figures-in-r" id="toc-making-graphs-and-figures-in-r" class="nav-link" data-scroll-target="#making-graphs-and-figures-in-r">Making graphs and figures in <code>R</code></a></li>
   </ul></li>
@@ -399,6 +400,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="introduction-to-bulk-rna-seq" class="level1">
 <h1>Introduction to bulk RNA-seq</h1>
 <p>With bulk RNA sequencing technologies, the goal is to capture <strong>average gene expression levels</strong> across pooled cell populations of interest. This is achieved by capturing all RNA transcripts from a sample and sequencing them in an automated way to ensure the adequate throughput needed for answering the biological hypotheses behind the experiment.</p>
+<section id="experimental-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="experimental-workflow">Experimental Workflow</h2>
 <p>A bulk RNA-seq experiment is articulated in the following steps:</p>
 <div data-align="center" style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 20px; ">
 <div data-align="left">
@@ -413,17 +416,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 <div>
-<p><img src="https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/assets/rnaseq_workflow.svg" width="400"></p>
+<p><img src="https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/assets/rnaseq_workflow.svg" width="450"></p>
 </div>
 </div>
 <blockquote class="blockquote">
 <p>💡 But why would we look at mRNAs at all? Why not DNA or proteins? As always, the short answer is “<em>it depends…</em>”</p>
 </blockquote>
-<p>:::</p>
-<div>
-<p><img src="https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/assets/rnaseq_transcription.svg" width="400"></p>
-</div>
-<p>::::</p>
+<center>
+<p><img src="https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/assets/rnaseq_transcription.svg" width="600"></p>
+</center>
+</section>
 <section id="next-generation-sequencing" class="level2">
 <h2 class="anchored" data-anchor-id="next-generation-sequencing">Next Generation Sequencing</h2>
 <p>Next Generation Sequencing technologies (Illumina/PacBio) allow experimenters to capture the entire genetic information in a sample in a completely unsupervised manner. The process works with an approach called <strong>sequencing-by-synthesis</strong> or SBS for short.</p>
@@ -438,11 +440,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="how-do-we-go-from-mrna-to-sequences" class="level2">
 <h2 class="anchored" data-anchor-id="how-do-we-go-from-mrna-to-sequences">How do we go from mRNA to sequences?</h2>
-<p>:::</p>
-<div>
-<p><img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/rnaseq_library_prep.svg" width="400"></p>
-</div>
-<p>::::</p>
+<center>
+<p><img src="https://raw.githubusercontent.com/NBISweden/workshop-ngsintro/a4d8e1da73bc2a6997c350c52deb4b377e3df2e8/topics/rnaseq/assets/rnaseq_library_prep.svg" width="400"></p>
+</center>
 <p>Starting from our precious mRNA molecule that has been isolated from our sample, we transform it into DNA by means of <em>retrotranscription</em>, this process creates what is known as <strong>cDNA</strong>. cDNA molecules can be very large and due to technical constraints we need to fragment them into smaller pieces. All these pieces are then ligated to a set of sequences known as <strong>adapters</strong>. As we have seen in the video, adapter sequences are used by the sequencing machine to hibridize cDNA fragments to the flow cell and form sequencing clusters.</p>
 </section>
 <section id="raw-sequencing-output" class="level2">
@@ -467,29 +467,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="quality-metrics-inspection">Quality Metrics Inspection</h2>
 <p>Computational tools like <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a> aid with the <strong>visual inspection of per-sample quality metrics</strong> from NGS experiments. Some of the QC metrics of interest to consider include the ones listed below, on the <strong>left</strong> are optimal metric profiles while on the <strong>right</strong> are sub-optimal ones:</p>
 <center>
-<p><strong>Per-base Sequence Quality</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/pbsq.jpg" width="800"> <em>This uses <strong>box plots</strong> to highlight the per-base quality along all <strong>reads in the sequencing experiment, we can notice a physiological drop in quality towards the end part of the read</strong>.</em></p>
+<p><strong>Per-base Sequence Quality</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/pbsq.jpg?raw=true" width="800"> <em>This uses <strong>box plots</strong> to highlight the per-base quality along all <strong>reads in the sequencing experiment, we can notice a physiological drop in quality towards the end part of the read</strong>.</em></p>
 </center>
 <center>
-<p><strong>Per-sequence Quality Scores</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/psqs.jpg" width="800"> <em>Here we are plotting the <strong>distribution of Phred scores</strong> across all identified sequences, we can see that the high quality experiment (left) has a peak at higher Phred scores values (34-38).</em></p>
+<p><strong>Per-sequence Quality Scores</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/psqs.jpg?raw=true" width="800"> <em>Here we are plotting the <strong>distribution of Phred scores</strong> across all identified sequences, we can see that the high quality experiment (left) has a peak at higher Phred scores values (34-38).</em></p>
 </center>
 <center>
-<p><strong>Per-base Sequence Content</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/pbsc.jpg" width="800"> <em>Here we check the sequence (read) base content, in a normal scenario we do not expect any dramatic variation across the full length of the read since we should see a quasi-balanced distribution of bases.</em></p>
+<p><strong>Per-base Sequence Content</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/pbsc.jpg?raw=true" width="800"> <em>Here we check the sequence (read) base content, in a normal scenario we do not expect any dramatic variation across the full length of the read since we should see a quasi-balanced distribution of bases.</em></p>
 </center>
 <center>
-<p><strong>Per-sequence GC Content</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/psgc.jpg" width="800"> <em>GC-content referes to the <strong>degree at which guanosine and cytosine are present within a sequence</strong>, in NGS experiments which also include PCR amplification this aspect is crucial to check since GC-poor sequences may be enriched due to their easier <strong>amplification bias</strong>. In a normal random library we would expect this to have a bell-shaped distribution such as the one on the left.</em></p>
+<p><strong>Per-sequence GC Content</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/psgc.jpg?raw=true" width="800"> <em>GC-content referes to the <strong>degree at which guanosine and cytosine are present within a sequence</strong>, in NGS experiments which also include PCR amplification this aspect is crucial to check since GC-poor sequences may be enriched due to their easier <strong>amplification bias</strong>. In a normal random library we would expect this to have a bell-shaped distribution such as the one on the left.</em></p>
 </center>
 <center>
-<p><strong>Sequence Duplication Levels</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/sdl.jpg" width="800"> <em>This plot shows the degree of sequence duplication levels. In a normal library (left) we <strong>expect to have low levels of duplication</strong> which can be a positive indicator of high sequencing coverage.</em></p>
+<p><strong>Sequence Duplication Levels</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/sdl.jpg?raw=true" width="800"> <em>This plot shows the degree of sequence duplication levels. In a normal library (left) we <strong>expect to have low levels of duplication</strong> which can be a positive indicator of high sequencing coverage.</em></p>
 </center>
 <center>
-<p><strong>Adapter Content</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/ac.jpg" width="800"> <em>In NGS experiments we use <strong>adapters</strong> to create a library. Sometimes these can get sequenced accidentally and end up being part of a <strong>read</strong>. This phenomenon can be spotted here and corrected later using a computational approach called <strong>adapter trimming</strong>, visible in next section’s figure.</em></p>
+<p><strong>Adapter Content</strong> <img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/ac.jpg?raw=true" width="800"> <em>In NGS experiments we use <strong>adapters</strong> to create a library. Sometimes these can get sequenced accidentally and end up being part of a <strong>read</strong>. This phenomenon can be spotted here and corrected later using a computational approach called <strong>adapter trimming</strong>, visible in next section’s figure.</em></p>
 </center>
 </section>
 <section id="read-alignment" class="level2">
 <h2 class="anchored" data-anchor-id="read-alignment">Read Alignment</h2>
 <p>Once we are satisfied with the quality of our pool of sequences, we need to <strong>map them back to the transcripts to which they belonged originally when we produced cDNA molecules from RNA</strong>. This process of mapping is <strong>needed to understand from which genes were transcripts generated</strong> and therefore is an essential and very important step of data processing!</p>
 <center>
-<p><img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/rnaseq_mapping.svg" width="700"></p>
+<p><img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/rnaseq_mapping.svg?raw=true" width="700"></p>
 <p><em>Alignment of <strong>trimmed reads</strong> to a reference genome or transcriptome.</em></p>
 </center>
 <section id="but-what-is-a-reference-genome-really" class="level3">
@@ -500,6 +500,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>Tools like <strong><a href="https://github.com/alexdobin/STAR">STAR</a></strong> and <strong><a href="https://github.com/lh3/bwa">BWA-MEM</a></strong> are designed to achieve great speed and accuracy for the computationally expensive task of read alignment.</p>
 <p>The results of the alignment procedure is a different set of files in <em>SAM</em> (Standard Alignment Map) format which get compressed into their binary representation, <strong>BAM files</strong>. These are usually one for each analyzed sample and encode the position of all the identified reads along the genome as well as alignment quality metrics for QC, which can be carried out with tools like <strong><a href="https://multiqc.info/">MultiQC</a></strong>.</p>
+<center>
+<p><img src="../pics/igv_screen.png" width="700"></p>
+<p><em>IGV screenshot of a single BAM file showing reads at the GAPDH locus.</em></p>
+</center>
 <blockquote class="blockquote">
 <p>💡 All of these pre-processing steps, which are <em>computationally expensive</em>, are usually integrated in command-line pipelines which <strong>connect inputs and outputs of these difference procedures in a streamlined manner</strong>. An example is the RNA-seq pipeline provided by the <a href="https://nf-co.re/rnaseq">nf-core</a> community.</p>
 </blockquote>
@@ -509,7 +513,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="counting-transcripts">Counting Transcripts</h2>
 <p>After sequences have been aligned to their respective place on the genome, it is time to actually count how many times a given sequence is found on any given gene (or transcripts, or exons or others..), <strong>this will actually be our gene expression measurement!</strong></p>
 <center>
-<p><img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/rnaseq_counts.svg" width="350"></p>
+<p><img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/rnaseq_counts.svg?raw=true" width="350"></p>
 </center>
 <p>There are many ways to achieve this task but among the most used is the <a href="https://subread.sourceforge.net/featureCounts.html"><code>featureCounts</code></a> tool. In the end, for every sample, we will end up with a number for each gene (or transcripts), these are called <strong>gene (transcript) counts</strong>.</p>
 <p>These are usually summarized in a table, called <em>gene expression table</em>, where <strong>each sample is a column and each row a different gene</strong>. We will now load one and take a closer look, this will be our starting point in the hands-on analysis of bulk RNA-seq data.</p>
@@ -524,7 +528,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="what-data-are-we-going-to-use-what-is-our-question">What data are we going to use? What is our question?</h2>
 <p>We will load a table of data from <a href="https://www.nature.com/articles/s41467-022-35583-w">this study</a> on tumor-infiltrating CD8+ T-cells. The original data supporting the findings of the study has been deposited on the <strong>Gene Expression Omnibus</strong> (GEO) data portal under accession number <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE120575">GSE120575</a>. This is the <strong>place where all studies publish the <em>processed</em> sequencing data from their analysis</strong> in order for other researchers to download it and reproduce their findings or test their own hypotheses.</p>
 <center>
-<p><img src="../pics/ga_gse120575.png" width="400"></p>
+<p><img src="../pics/ga_gse120575.png" width="800"></p>
 </center>
 <p>Briefly, the authors collected bulk RNA-seq data from different subpopulations of transgenic CD8+ T cells including ones known as <em>exhausted</em> which are particularly relevant in the context of cancer immunotherapy. These cells are in fact consistently exposed to antigens in the tumor microenvironment and become dysfunctional, unable to fight cancer cells which are therefore free to keep expanding. Understanding and preventing the process of T cell exhaustion poses and interesting and relevant challenge in the field of immunotherapies for a variety of cancer types.</p>
 </section>
@@ -796,8 +800,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>We can also inspect the <strong>metadata</strong> from the samples which is stored in the <code>samples</code> variable we created above.</p>
 </section>
-<section id="exploring-_meta_data" class="level2">
-<h2 class="anchored" data-anchor-id="exploring-_meta_data">Exploring _meta_data</h2>
+<section id="exploring-metadata" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-metadata">Exploring Metadata</h2>
 <p>Metadata refers to that <em>class of accessory data</em> to the main experimental readout. In the case of this published dataset, the <em>main</em> data refers to the actual gene expression table with the associated counts measurement for each sample. Each sample then has associated information used to further describe it (e.g.&nbsp;type of cells, patient ID, treatment status, experimental batch…), as we have previously seen, this information is instrumental to bioinformaticians to avoid pitfalls in the analysis. In the case of our data, this information is contained in the <code>samples</code> table. We can use <code>R</code>’s functionality to explore it and visualize it in order to get an idea about the dataset!</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What does the table look like?</span></span>
@@ -928,18 +932,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="making-graphs-and-figures-in-r" class="level3">
 <h3 class="anchored" data-anchor-id="making-graphs-and-figures-in-r">Making graphs and figures in <code>R</code></h3>
 <p>We can take advantage of the way <code>R</code> handles tabular data to easily plot information and get a <strong>visual sense</strong> of the dataset. Exploring data in this way is very important, it allows us to detect flaws and weird effects in the data early on, so to avoid any misinterpretation which can greatly impact downstream analysis. For example, taking our <code>samples</code> table, we can ask whether <strong>covariates</strong> are balanced in the data or some categories are more/less represented than others.</p>
-<p>For example, let’s say we want to understand</p>
+<p>For example, let’s say we want to understand how many sample in our data come from patients with different genders!</p>
+<p>We can use <code>R</code>’s go-to plotting library called <code>ggplot2</code> to feed it the <code>samples</code> table and tell it what we want to plot and how.</p>
+<blockquote class="blockquote">
+<p>💡 when visualizing data, it is important to understand the variables we want to work with. Are we plotting <em>univariate</em> or <strong>bivariate</strong> data? Are we interested in <strong>continuous</strong> or <strong>categorical</strong> variables?</p>
+</blockquote>
+<p>Let’s first plot a barplot with gender information, then we’ll discuss a bit more about the code and <code>ggplot</code>’s <strong>grammar of graphics</strong>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple and ugly</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(samples, <span class="fu">aes</span>(<span class="at">x=</span>sex)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="day1_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Let’s make a nicer one! Nice graphs convey information more easily and (most importantly) efficiently!</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A bit more work but nicer and more intuitive</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(samples, <span class="fu">aes</span>(<span class="at">x=</span>sex, <span class="at">fill=</span>sex)) <span class="sc">+</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">width=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">'Female'</span><span class="ot">=</span><span class="st">'#FD96A9'</span>, <span class="st">'Male'</span><span class="ot">=</span><span class="st">'#BBCBCB'</span>)) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="day1_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>That’s better! The trick to <code>ggplot</code> is the ability to map variables to the <code>x</code> and <code>y</code> axes with the aesthetics function <code>aes()</code>. this is just the first layer, then from this we can build up our plot deciding what plot to draw (in this case a barplot hence <code>geom_bar()</code>) and further customize it.</p>
+<p>We can use the same approach to understand how experimental categories are distributed across our data. In a real-life scenario, we should already know this information because we were the ones designing the experiment in the first place, so we should know how many replicates we need!</p>
+<blockquote class="blockquote">
+<p>🚀 Try to draw a barplot showing the amount of sample that we have for each experimental condition in the data!</p>
+</blockquote>
 </section>
 </section>
 <section id="savingloading-files" class="level2">
 <h2 class="anchored" data-anchor-id="savingloading-files">Saving/Loading Files</h2>
 <p><strong>Let’s save this object with samples information in a file on this cloud session</strong>, this might be needed later if we end up in some trouble with the <code>R</code> session! This is a file format where columns are separated by commas. You might be familiar with this format if you have worked quite a bit in Excel. In <code>R</code>, we can save tabular data with the <code>write.table()</code> function specifying the location (the file name) we want. This is <strong>useful in the case our <code>R</code> session dies or we decide to interrupt it</strong>. In this case we will not have to run the whole analysis from the beginning and we can just source the file and load it!</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(samples, <span class="st">"samples_table.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">quote =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(samples, <span class="st">"samples_table.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">quote =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can <strong>load the object back into the current session</strong> by using the following code line:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"samples_table.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"samples_table.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <blockquote class="blockquote">
 <p>💡 <strong>We will also repeat this procedure with the results of the differential expression analysis in order to avoid repeating work we have already done in case of any trouble!</strong></p>

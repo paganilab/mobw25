@@ -152,6 +152,8 @@ Hopefully all packages were correctly installed and now we can dive a bit deeper
 # Introduction to bulk RNA-seq
 With bulk RNA sequencing technologies, the goal is to capture **average gene expression levels** across pooled cell populations of interest. This is achieved by capturing all RNA transcripts from a sample and sequencing them in an automated way to ensure the adequate throughput needed for answering the biological hypotheses behind the experiment. 
 
+## Experimental Workflow
+
 A bulk RNA-seq experiment is articulated in the following steps:
 
 :::: {align="center" style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 20px; "}
@@ -175,7 +177,7 @@ A bulk RNA-seq experiment is articulated in the following steps:
 
 ::: {}
 
-<img src="https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/assets/rnaseq_workflow.svg" width=400 />
+<img src="https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/assets/rnaseq_workflow.svg" width=450 />
 
 :::
 
@@ -183,15 +185,11 @@ A bulk RNA-seq experiment is articulated in the following steps:
 
 > 💡 But why would we look at mRNAs at all? Why not DNA or proteins? As always, the short answer is "_it depends..._"
 
-:::
+<center>
 
-::: {}
+<img src="https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/assets/rnaseq_transcription.svg" width=600 />
 
-<img src="https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/assets/rnaseq_transcription.svg" width=400 />
-
-:::
-
-::::
+</center>
 
 ## Next Generation Sequencing
 Next Generation Sequencing technologies (Illumina/PacBio) allow experimenters to capture the entire genetic information in a sample in a completely unsupervised manner. The process works with an approach called **sequencing-by-synthesis** or SBS for short. 
@@ -209,15 +207,11 @@ This means that **strands are sequenced by re-building them** using the natural 
 
 ## How do we go from mRNA to sequences?
 
-:::
+<center>
 
-::: {}
+<img src="https://raw.githubusercontent.com/NBISweden/workshop-ngsintro/a4d8e1da73bc2a6997c350c52deb4b377e3df2e8/topics/rnaseq/assets/rnaseq_library_prep.svg" width=400 />
 
-<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/rnaseq_library_prep.svg" width=400 />
-
-:::
-
-::::
+</center>
 
 Starting from our precious mRNA molecule that has been isolated from our sample, we transform it into DNA by means of _retrotranscription_, this process creates what is known as **cDNA**. cDNA molecules can be very large and due to technical constraints we need to fragment them into smaller pieces. All these pieces are then ligated to a set of sequences known as **adapters**. As we have seen in the video, adapter sequences are used by the sequencing machine to hibridize cDNA fragments to the flow cell and form sequencing clusters.
 
@@ -246,7 +240,7 @@ Computational tools like [FastQC](https://www.bioinformatics.babraham.ac.uk/proj
 <center>
 
 **Per-base Sequence Quality**
-<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/pbsq.jpg" width=800 />
+<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/pbsq.jpg?raw=true" width=800 />
 _This uses **box plots** to highlight the per-base quality along all **reads in the sequencing experiment, we can notice a physiological drop in quality towards the end part of the read**._
 
 </center>
@@ -254,7 +248,7 @@ _This uses **box plots** to highlight the per-base quality along all **reads in 
 <center>
 
 **Per-sequence Quality Scores**
-<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/psqs.jpg" width=800 />
+<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/psqs.jpg?raw=true" width=800 />
 _Here we are plotting the **distribution of Phred scores** across all identified sequences, we can see that the high quality experiment (left) has a peak at higher Phred scores values (34-38)._
 
 </center>
@@ -262,7 +256,7 @@ _Here we are plotting the **distribution of Phred scores** across all identified
 <center>
 
 **Per-base Sequence Content**
-<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/pbsc.jpg" width=800 />
+<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/pbsc.jpg?raw=true" width=800 />
 _Here we check the sequence (read) base content, in a normal scenario we do not expect any dramatic variation across the full length of the read since we should see a quasi-balanced distribution of bases._
 
 </center>
@@ -270,7 +264,7 @@ _Here we check the sequence (read) base content, in a normal scenario we do not 
 <center>
 
 **Per-sequence GC Content**
-<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/psgc.jpg" width=800 />
+<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/psgc.jpg?raw=true" width=800 />
 _GC-content referes to the **degree at which guanosine and cytosine are present within a sequence**, in NGS experiments which also include PCR amplification this aspect is crucial to check since GC-poor sequences may be enriched due to their easier **amplification bias**. In a normal random library we would expect this to have a bell-shaped distribution such as the one on the left._
 
 </center>
@@ -278,7 +272,7 @@ _GC-content referes to the **degree at which guanosine and cytosine are present 
 <center>
 
 **Sequence Duplication Levels**
-<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/sdl.jpg" width=800 />
+<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/sdl.jpg?raw=true" width=800 />
 _This plot shows the degree of sequence duplication levels. In a normal library (left) we **expect to have low levels of duplication** which can be a positive indicator of high sequencing coverage._
 
 </center>
@@ -286,7 +280,7 @@ _This plot shows the degree of sequence duplication levels. In a normal library 
 <center>
 
 **Adapter Content**
-<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/ac.jpg" width=800 />
+<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/ac.jpg?raw=true" width=800 />
 _In NGS experiments we use **adapters** to create a library. Sometimes these can get sequenced accidentally and end up being part of a **read**. This phenomenon can be spotted here and corrected later using a computational approach called **adapter trimming**, visible in next section's figure._
 
 </center>
@@ -297,7 +291,7 @@ This process of mapping is **needed to understand from which genes were transcri
 
 <center>
 
-<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/rnaseq_mapping.svg" width=700 />
+<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/rnaseq_mapping.svg?raw=true" width=700 />
 
 _Alignment of **trimmed reads** to a reference genome or transcriptome._
 
@@ -312,6 +306,14 @@ Tools like **[STAR](https://github.com/alexdobin/STAR)** and **[BWA-MEM](https:/
 
 The results of the alignment procedure is a different set of files in _SAM_ (Standard Alignment Map) format which get compressed into their binary representation, **BAM files**. These are usually one for each analyzed sample and encode the position of all the identified reads along the genome as well as alignment quality metrics for QC, which can be carried out with tools like **[MultiQC](https://multiqc.info/)**.
 
+<center>
+
+<img src="../pics/igv_screen.png" width=700 />
+
+_IGV screenshot of a single BAM file showing reads at the GAPDH locus._
+
+</center>
+
 > 💡
 > All of these pre-processing steps, which are _computationally expensive_, are usually integrated in command-line pipelines which **connect inputs and outputs of these difference procedures in a streamlined manner**. An example is the RNA-seq pipeline provided by the [nf-core](https://nf-co.re/rnaseq) community.
 
@@ -320,7 +322,7 @@ After sequences have been aligned to their respective place on the genome, it is
 
 <center>
 
-<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/rnaseq_counts.svg" width=350 />
+<img src="https://github.com/NBISweden/workshop-ngsintro/blob/main/topics/rnaseq/assets/rnaseq_counts.svg?raw=true" width=350 />
 
 </center>
 
@@ -339,7 +341,7 @@ We will load a table of data from [this study](https://www.nature.com/articles/s
 
 <center>
 
-<img src="../pics/ga_gse120575.png" width=400 />
+<img src="../pics/ga_gse120575.png" width=800 />
 
 </center>
 
@@ -402,7 +404,7 @@ We can see that our table contains count information for `r dim(counts)[1]` gene
 
 We can also inspect the **metadata** from the samples which is stored in the `samples` variable we created above.
 
-## Exploring _meta_data
+## Exploring Metadata
 Metadata refers to that _class of accessory data_ to the main experimental readout. In the case of this published dataset, the _main_ data refers to the actual gene expression table with the associated counts measurement for each sample. Each sample then has associated information used to further describe it (e.g. type of cells, patient ID, treatment status, experimental batch...), as we have previously seen, this information is instrumental to bioinformaticians to avoid pitfalls in the analysis.
 In the case of our data, this information is contained in the `samples` table. We can use `R`'s functionality to explore it and visualize it in order to get an idea about the dataset!
 
@@ -426,7 +428,38 @@ In this case, this `samples` table has as many rows (`r nrow(samples)`) as there
 ### Making graphs and figures in `R`
 We can take advantage of the way `R` handles tabular data to easily plot information and get a **visual sense** of the dataset. Exploring data in this way is very important, it allows us to detect flaws and weird effects in the data early on, so to avoid any misinterpretation which can greatly impact downstream analysis. For example, taking our `samples` table, we can ask whether **covariates** are balanced in the data or some categories are more/less represented than others.
 
-For example, let's say we want to understand 
+For example, let's say we want to understand how many sample in our data come from patients with different genders!
+
+We can use `R`'s go-to plotting library called `ggplot2` to feed it the `samples` table and tell it what we want to plot and how.
+
+> 💡 when visualizing data, it is important to understand the variables we want to work with. Are we plotting *univariate* or **bivariate** data? Are we interested in **continuous** or **categorical** variables? 
+
+Let's first plot a barplot with gender information, then we'll discuss a bit more about the code and `ggplot`'s **grammar of graphics**.
+
+```{r}
+library("ggplot2")
+
+# Simple and ugly
+ggplot(samples, aes(x=sex)) + geom_bar()
+
+```
+
+Let's make a nicer one! Nice graphs convey information more easily and (most importantly) efficiently!
+
+```{r}
+# A bit more work but nicer and more intuitive
+ggplot(samples, aes(x=sex, fill=sex)) + 
+  geom_bar(width=0.7) +
+  scale_fill_manual(values=c('Female'='#FD96A9', 'Male'='#BBCBCB')) +
+  theme_minimal()
+
+```
+
+That's better! The trick to `ggplot` is the ability to map variables to the `x` and `y` axes with the aesthetics function `aes()`. this is just the first layer, then from this we can build up our plot deciding what plot to draw (in this case a barplot hence `geom_bar()`) and further customize it.
+
+We can use the same approach to understand how experimental categories are distributed across our data. In a real-life scenario, we should already know this information because we were the ones designing the experiment in the first place, so we should know how many replicates we need!
+
+> 🚀 Try to draw a barplot showing the amount of sample that we have for each experimental condition in the data!
 
 ## Saving/Loading Files
 **Let's save this object with samples information in a file on this cloud session**, this might be needed later if we end up in some trouble with the `R` session! This is a file format where columns are separated by commas. You might be familiar with this format if you have worked quite a bit in Excel. In `R`, we can save tabular data with the `write.table()` function specifying the location (the file name) we want. This is **useful in the case our `R` session dies or we decide to interrupt it**. In this case we will not have to run the whole analysis from the beginning and we can just source the file and load it!
