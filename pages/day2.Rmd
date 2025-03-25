@@ -242,6 +242,20 @@ dds$samples
 dds$samples %>% kbl() %>% kable_styling()
 ```
 
+### Visualizing the relationshhip between library size and size factors
+We can explore the relationship between the total library size for each of our samples and their respective `norm.factors` to understand what the purpose of the size factors is! Since we are going to use the factors balance differences of counts, we expect a positive relationship between the total number of counts in a sample and its estimated `norm.factors`.
+
+```{r}
+# Plot relationship
+library(ggplot2)
+
+dds$samples %>% ggplot(.,aes(x = norm.factors, y = lib.size, color=SampleGroup)) + 
+      geom_point(size=8, alpha=0.7)+
+      ggtitle("Relationship between Normalization Factors and Library Size") + 
+      theme_classic() +
+      theme(plot.title = element_text(hjust = 0.5)) 
+```
+
 > 💡
 > **NOTE**: Although `edgeR` does not use normalized counts as input (the normalization process happens inside automatically), the normalized counts we just generated are definitely useful when plotting results and performing clustering.
 
@@ -368,3 +382,12 @@ gc()
 ```
 
 Now that we have plotted all the main diagnostic information related to the dataset and we have a bit of a grasp of it, we can start thinking about **testing for differentially expressed genes**.
+
+# Recap
+Let's go through what we have seen so far:
+
+- Learned about the possible effects of sequencing artefacts...
+- ...and the necessity to _normalize_ data for quantitative analysis
+- Used the `edgeR` package to normalize the data
+- Learned the concept of _design formula_ and how it relates to the actual experimental design
+- Performed a visual inspection of the data and learned to explore sample-to-sample relationships

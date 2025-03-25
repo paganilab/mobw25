@@ -210,13 +210,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#visualizing-results-with-volcano-plots" id="toc-visualizing-results-with-volcano-plots" class="nav-link" data-scroll-target="#visualizing-results-with-volcano-plots">Visualizing Results With Volcano Plots</a></li>
   <li><a href="#mapping-ids-to-gene-symbols" id="toc-mapping-ids-to-gene-symbols" class="nav-link" data-scroll-target="#mapping-ids-to-gene-symbols">Mapping IDs to Gene Symbols</a></li>
   <li><a href="#visualizing-results-with-heatmaps" id="toc-visualizing-results-with-heatmaps" class="nav-link" data-scroll-target="#visualizing-results-with-heatmaps">Visualizing Results With Heatmaps</a></li>
+  <li><a href="#plot-single-genes-across-samples" id="toc-plot-single-genes-across-samples" class="nav-link" data-scroll-target="#plot-single-genes-across-samples">Plot single genes across samples</a></li>
   </ul></li>
   <li><a href="#further-downstream-analyses" id="toc-further-downstream-analyses" class="nav-link" data-scroll-target="#further-downstream-analyses">Further Downstream Analyses</a>
   <ul class="collapse">
   <li><a href="#gsea" id="toc-gsea" class="nav-link" data-scroll-target="#gsea">GSEA</a></li>
   <li><a href="#gene-ontology-enrichment-analysis" id="toc-gene-ontology-enrichment-analysis" class="nav-link" data-scroll-target="#gene-ontology-enrichment-analysis">Gene Ontology Enrichment Analysis</a></li>
-  <li><a href="#take-home-messages" id="toc-take-home-messages" class="nav-link" data-scroll-target="#take-home-messages">Take-home Messages 🏠</a></li>
   </ul></li>
+  <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">Recap</a></li>
+  <li><a href="#take-home-messages" id="toc-take-home-messages" class="nav-link" data-scroll-target="#take-home-messages">Take-home Messages 🏠</a></li>
   </ul>
 </nav>
     </div>
@@ -251,6 +253,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="differential-expression-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="differential-expression-analysis">Differential Expression Analysis</h2>
+<blockquote class="blockquote">
+<p>🤔 At this point we should remind ourselves of <em>why</em> we decided to perform an RNA-seq experiment, do you remember?</p>
+</blockquote>
 <p>The main purpose of the steps we performed previously is to <strong>get to this point with a fair knowledge of the data at hand</strong>, all the steps have to be repeated each time one starts with some fresh new data (no data is the same!!). Now we can start performing <strong>differential expression analysis</strong> with the <code>edgeR</code> package. The main concept behind it is to <strong>contrast two categories of our interest in the data (i.e.&nbsp;CD8+ T<sub>ex</sub> vs CD8+ T<sub>rest</sub>) and check which genes are predominantly (defined in a <em>statistical sense</em>) expressed in one category as opposed to the other</strong>. As introduced previously, we tell <code>edgeR</code> which comparisons to perform through the <strong>design formula</strong> we specified above when we created our <code>DGEList</code> object <code>dds</code>. We can recap the design formula that we specified.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the design formula we specified (do not copy this, you should have it in your variable `design`)</span></span>
@@ -856,6 +861,43 @@ Up                6923</code></pre>
 </div>
 <p>Given that the number of differentially expressed genes can sometimes be very high, <strong>we cannot pretend to explore them manually one by one understanding their function</strong>! As we will see, there are further downstream analyses we can perform to get a sense of <strong><em>trends</em></strong> and <strong><em>pathways</em></strong> activated in the cell type of our interest. These analyses which look at genes in groups or <strong>ontologies</strong> try to match conditions with functions, to better elucidate what is going on inside cells in a specific condition.</p>
 </section>
+<section id="plot-single-genes-across-samples" class="level3">
+<h3 class="anchored" data-anchor-id="plot-single-genes-across-samples">Plot single genes across samples</h3>
+<p>Here we can plot the expression values of single genes to directly inspect the results of the differential gene expression analysis. Since we are dealing with multiple samples for which a measurement of gene expression has been performed, we are plotting each sample colored by its original category to understand the trends that we detect from the global differential gene expression analysis!</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select a set of genes to plot</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>gnames_to_plot <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"CD8A"</span>, <span class="co"># Should not differ</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"TOX"</span>, <span class="co"># Previously associated with T cell exhaustion</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"GNLY"</span>, <span class="co"># Previously associated to T effector function</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"IL7R"</span> <span class="co"># Previously associated to T memory function</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                    ) </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot as a grouped boxplot with jittering</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>pldf <span class="ot">&lt;-</span> <span class="fu">cpm</span>(dds, <span class="at">log=</span><span class="cn">TRUE</span>)[<span class="fu">rownames</span>(volcano_corr[<span class="fu">which</span>(volcano_corr<span class="sc">$</span>gene_names <span class="sc">%in%</span> gnames_to_plot),]),] <span class="sc">%&gt;%</span> <span class="fu">t</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>() </span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(pldf) <span class="ot">&lt;-</span> gnames_to_plot</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>pldf <span class="sc">%&gt;%</span> <span class="fu">merge</span>(samples, <span class="at">by=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>            reshape2<span class="sc">::</span><span class="fu">melt</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x=</span>SampleGroup, <span class="at">y=</span>value)) <span class="sc">+</span> </span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">"lightgray"</span>) <span class="sc">+</span> </span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">color=</span>SampleGroup), <span class="at">size=</span><span class="dv">3</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">'RdYlBu'</span>) <span class="sc">+</span> </span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>            <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable) <span class="sc">+</span> </span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>💡 Can we check the expression of one of the genes highlighted in the conclusions of the original paper?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>🤔 What if we want to plot the two most differentially expressed genes in both directions (both up and down)? <em>hint</em>: catch their names from the <code>volcano_corr</code> table by ordering it on fold-change with the <code>%&gt;% arrange()</code> function</p>
+</blockquote>
+</section>
 </section>
 <section id="further-downstream-analyses" class="level2">
 <h2 class="anchored" data-anchor-id="further-downstream-analyses">Further Downstream Analyses</h2>
@@ -878,23 +920,23 @@ Up                6923</code></pre>
 <p>In our specific use case, <strong>we are going to run GSEA on the set of up-regulated genes in CD8+ T<sub>ex</sub> cells to check if a gene set of exhaustion is indeed enriched in the genes we have found up-regulated</strong>. For this task we are going to use the <code>fgsea</code> package. In order to extract the gene set without the need to directly download it, we are going to <strong>access MSigDB directly from <code>R</code></strong> using another package called <code>msigdbr</code>.</p>
 <blockquote class="blockquote">
 <p>🚨 <strong>WARNING</strong>: This code that follows might kill your <code>R</code> session inadvertedly. If this happens, don’t panic, and reload the object we saved before! Use the following syntax to get back on track after you resume the session:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a> res <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"results.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a> samples <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"samples_table.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a> res <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"results.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a> samples <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"samples_table.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In this way you should be all set to successfully run all the code below! 🙌🏻</p>
 </blockquote>
 <section id="extract-msigdb-signatures" class="level4">
 <h4 class="anchored" data-anchor-id="extract-msigdb-signatures">Extract MSigDB Signatures</h4>
 <p>In the following chunk, we use a function from the <code>msigdbr</code> package to extract the gene set of our interest:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(msigdbr)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the gene sets from the MSigDB database</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>immune_gsets <span class="ot">&lt;-</span> <span class="fu">msigdbr</span>(<span class="at">species =</span> <span class="st">"human"</span>, <span class="at">category =</span> <span class="st">"C7"</span>, <span class="at">subcategory =</span> <span class="st">"IMMUNESIGDB"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(msigdbr)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the gene sets from the MSigDB database</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>immune_gsets <span class="ot">&lt;-</span> <span class="fu">msigdbr</span>(<span class="at">species =</span> <span class="st">"human"</span>, <span class="at">category =</span> <span class="st">"C7"</span>, <span class="at">subcategory =</span> <span class="st">"IMMUNESIGDB"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s see what’s in the <code>immune_gsets</code> object:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at what we fetched from the database</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(immune_gsets, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at what we fetched from the database</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(immune_gsets, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -978,9 +1020,9 @@ Up                6923</code></pre>
 </div>
 <p>We can see that every row is a different gene (the <code>gene_symbol</code> colums) with its associated gene set (<code>gs_name</code> column). We will now extract a gene set related to CD8+ T-cell exhaustion which comes from <a href="https://www.sciencedirect.com/science/article/pii/S1074761307004542?via%3Dihub">this publication</a> and is names <a href="https://www.gsea-msigdb.org/gsea/msigdb/human/geneset/GSE9650_EFFECTOR_VS_EXHAUSTED_CD8_TCELL_DN.html"><code>GSE9650_EFFECTOR_VS_EXHAUSTED_CD8_TCELL_DN</code></a> in the database.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the `immune_gsets` table and take only the genes from the gene set of our interest</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>gene_set_name <span class="ot">&lt;-</span> <span class="st">"GSE9650_EFFECTOR_VS_EXHAUSTED_CD8_TCELL_DN"</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>tex_sig_df <span class="ot">&lt;-</span> immune_gsets <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gs_name <span class="sc">==</span> gene_set_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the `immune_gsets` table and take only the genes from the gene set of our interest</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>gene_set_name <span class="ot">&lt;-</span> <span class="st">"GSE9650_EFFECTOR_VS_EXHAUSTED_CD8_TCELL_DN"</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>tex_sig_df <span class="ot">&lt;-</span> immune_gsets <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gs_name <span class="sc">==</span> gene_set_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>How many genes do we have in the gene set that we just isolated? We can check this by looking at the number of rows of this new <code>tex_sig_df</code> table that we generated above using the command <code>nrow(tex_sig_df)</code>. Doing this should result in having 232 genes.</p>
 </section>
@@ -988,27 +1030,27 @@ Up                6923</code></pre>
 <h4 class="anchored" data-anchor-id="perform-gsea">Perform GSEA</h4>
 <p>Now we can perform GSEA using the <code>fgsea</code> package in <code>R</code>!</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fgsea)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare the ranking based on fold-change, from high (expressed in Tex) to low (expressed in Teff)</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(logFC)) <span class="sc">%&gt;%</span> <span class="fu">rownames</span>()</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>vals <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(logFC)) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(logFC)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set names</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(vals) <span class="ot">&lt;-</span> ids </span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare gene set</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>gset <span class="ot">&lt;-</span> <span class="fu">list</span>(tex_sig_df<span class="sc">$</span>ensembl_gene)</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(gset) <span class="ot">&lt;-</span> gene_set_name</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Run GSEA</span></span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>fgseaRes <span class="ot">&lt;-</span> <span class="fu">fgsea</span>(<span class="at">pathways =</span> gset, </span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stats    =</span> vals,</span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>                  <span class="at">eps      =</span> <span class="fl">0.0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fgsea)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare the ranking based on fold-change, from high (expressed in Tex) to low (expressed in Teff)</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(logFC)) <span class="sc">%&gt;%</span> <span class="fu">rownames</span>()</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>vals <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(logFC)) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(logFC)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set names</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(vals) <span class="ot">&lt;-</span> ids </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare gene set</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>gset <span class="ot">&lt;-</span> <span class="fu">list</span>(tex_sig_df<span class="sc">$</span>ensembl_gene)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(gset) <span class="ot">&lt;-</span> gene_set_name</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Run GSEA</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>fgseaRes <span class="ot">&lt;-</span> <span class="fu">fgsea</span>(<span class="at">pathways =</span> gset, </span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stats    =</span> vals,</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>                  <span class="at">eps      =</span> <span class="fl">0.0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at results</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>fgseaRes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at results</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>fgseaRes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -1029,11 +1071,11 @@ Up                6923</code></pre>
 <tbody>
   <tr>
    <td style="text-align:left;"> GSE9650_EFFECTOR_VS_EXHAUSTED_CD8_TCELL_DN </td>
-   <td style="text-align:right;"> 0.0001586 </td>
-   <td style="text-align:right;"> 0.0001586 </td>
-   <td style="text-align:right;"> 0.5188481 </td>
+   <td style="text-align:right;"> 0.0002626 </td>
+   <td style="text-align:right;"> 0.0002626 </td>
+   <td style="text-align:right;"> 0.4984931 </td>
    <td style="text-align:right;"> -0.4233808 </td>
-   <td style="text-align:right;"> -1.753383 </td>
+   <td style="text-align:right;"> -1.769752 </td>
    <td style="text-align:right;"> 144 </td>
    <td style="text-align:left;"> ENSG00000205002, ENSG00000143333, ENSG00000115008, ENSG00000164251, ENSG00000151012, ENSG00000198369, ENSG00000100285, ENSG00000122877, ENSG00000186827, ENSG00000172301, ENSG00000168209, ENSG00000049249, ENSG00000134202, ENSG00000067208, ENSG00000122378, ENSG00000162692, ENSG00000144935, ENSG00000139318, ENSG00000022267, ENSG00000005189, ENSG00000183814, ENSG00000186187, ENSG00000153234, ENSG00000174500, ENSG00000178695, ENSG00000147383, ENSG00000120699, ENSG00000132326, ENSG00000126778, ENSG00000174307, ENSG00000142453, ENSG00000148834, ENSG00000111142, ENSG00000177425, ENSG00000162775, ENSG00000181019, ENSG00000174437, ENSG00000122140, ENSG00000000971, ENSG00000117595, ENSG00000106546, ENSG00000168298, ENSG00000132305, ENSG00000241468, ENSG00000196388, ENSG00000100473, ENSG00000128791 </td>
   </tr>
@@ -1044,13 +1086,13 @@ Up                6923</code></pre>
 </div>
 <p>We can now <strong>plot the GSEA results</strong> in the standard way:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot GSEA results</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotEnrichment</span>(gset[[gene_set_name]],</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>               vals) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span>gene_set_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot GSEA results</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotEnrichment</span>(gset[[gene_set_name]],</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>               vals) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span>gene_set_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="day3_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="day3_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1065,23 +1107,23 @@ Up                6923</code></pre>
 <h3 class="anchored" data-anchor-id="gene-ontology-enrichment-analysis">Gene Ontology Enrichment Analysis</h3>
 <p>Next, we will try to <strong>get a more <em>unsupervised</em> look at what kind of biology is happening inside our CD8+ T<sub>ex</sub> cells by performing a Gene Ontology Enrichment analysis</strong>. This will allow us to check which and how many up-regulated genes in CD8+ T<sub>ex</sub> cells are represented in various biological processes. We will do this using the <code>clusterProfiler</code> package in <code>R</code>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(clusterProfiler)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get up-regulated genes</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> <span class="fu">rownames</span>(up_df)</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform gene ontology enrichment</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>ego <span class="ot">&lt;-</span> <span class="fu">enrichGO</span>(<span class="at">gene         =</span> genes,</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">OrgDb         =</span> org.Hs.eg.db,</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">keyType       =</span> <span class="st">'ENSEMBL'</span>,</span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">ont           =</span> <span class="st">"MF"</span>, <span class="co"># Molecular Function, use "BP" or "CC" for Biological Process or Cellular Component</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">pAdjustMethod =</span> <span class="st">"BH"</span>,</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">pvalueCutoff  =</span> <span class="fl">0.05</span>,</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">qvalueCutoff  =</span> <span class="fl">0.05</span>,</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">readable      =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(clusterProfiler)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get up-regulated genes</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> <span class="fu">rownames</span>(up_df)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform gene ontology enrichment</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>ego <span class="ot">&lt;-</span> <span class="fu">enrichGO</span>(<span class="at">gene         =</span> genes,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">OrgDb         =</span> org.Hs.eg.db,</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">keyType       =</span> <span class="st">'ENSEMBL'</span>,</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">ont           =</span> <span class="st">"MF"</span>, <span class="co"># Molecular Function, use "BP" or "CC" for Biological Process or Cellular Component</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">pAdjustMethod =</span> <span class="st">"BH"</span>,</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">pvalueCutoff  =</span> <span class="fl">0.05</span>,</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">qvalueCutoff  =</span> <span class="fl">0.05</span>,</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">readable      =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ego)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ego)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -1181,19 +1223,8 @@ Up                6923</code></pre>
 </div>
 <p>Let’s now plot the enrichment values that we got with a <em>graph layout</em>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot results of gene ontology enrichment</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">goplot</span>(ego, <span class="at">firstSigNodes=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="day3_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Now we can also plot the results with what is known as a ranked <strong>dot plot</strong>, here we <strong>encode the significance of the enrichment in the color of the dot</strong>, while its size represent the overlap of the specific gene set with the one we are using to perform the test (our list of up-regulated genes).</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dotplot</span>(ego, <span class="at">showCategory=</span><span class="dv">20</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Dotplot for GO enrichment"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot results of gene ontology enrichment</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">goplot</span>(ego, <span class="at">firstSigNodes=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1202,12 +1233,35 @@ Up                6923</code></pre>
 </div>
 </div>
 </div>
+<p>Now we can also plot the results with what is known as a ranked <strong>dot plot</strong>, here we <strong>encode the significance of the enrichment in the color of the dot</strong>, while its size represent the overlap of the specific gene set with the one we are using to perform the test (our list of up-regulated genes).</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dotplot</span>(ego, <span class="at">showCategory=</span><span class="dv">20</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Dotplot for GO enrichment"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <blockquote class="blockquote">
 <p>💡 <strong>GO analyses might highlight very interesting patterns and generate hypotheses, but are many times quite hard to interpret depending also on the biological system we are studying.</strong></p>
 </blockquote>
 </section>
-<section id="take-home-messages" class="level3">
-<h3 class="anchored" data-anchor-id="take-home-messages">Take-home Messages 🏠</h3>
+</section>
+<section id="recap" class="level1">
+<h1>Recap</h1>
+<p>Let’s go through what we have seen today:</p>
+<ul>
+<li>Learned about Differential Expression Analysis and what it is used for</li>
+<li>We performed the analysis on our CD8+ T cell dataset</li>
+<li>Managed to extract differentially-expressed genes</li>
+<li>Visualized the results in different ways, with each having its own strenghts and weaknesses</li>
+<li>Interpreted the results with the help of downstream analysis including GSEA and Gene Ontology (GO)</li>
+</ul>
+</section>
+<section id="take-home-messages" class="level1">
+<h1>Take-home Messages 🏠</h1>
 <p>Congratulations! You got the end of the course and now hopefully <strong>know the main steps of a bulk RNA-seq data analysis workflow</strong>! Some of the <em>key concepts</em> that we have explored during the course can enable us to reach some distilled points of interest:</p>
 <ul>
 <li><p><strong>Design your experiments carefully</strong> with data analysis in mind!</p></li>
@@ -1225,7 +1279,6 @@ Up                6923</code></pre>
 </center>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

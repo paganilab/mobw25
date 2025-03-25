@@ -24,7 +24,7 @@ The course will give an overview on how to **conceptually approach bioinformatic
 
 # Program Outline
 
-## Day 1 🤓
+## Day 1 🤓 
 - Setup RStudio or Posit
 - Get familiar with the Posit interface
 - Learn about bulk RNA-seq data processing
@@ -37,7 +37,7 @@ The course will give an overview on how to **conceptually approach bioinformatic
 - Normalize the data with functions provided by the `edgeR` package
 - Perform diagnostic and exploratory analysis on the data
 
-## Day 3 🧞‍♂️
+## Day 3 🧙🏼‍♂️
 - Learn about the theory behind differential expression analysis
 - Perform differential expression analysis using `edgeR`
 - Visualize the results

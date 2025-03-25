@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = 'center', warning = FALSE, messag
 
 # Setup
 ## Using Rstudio or Posit
-If RStudio is not installed on your computer, you can create a free account on [_posit.cloud_](posit.cloud). Create the account with your credentials and **follow the instructions to create a new project**. Once done, you should see something like this on your screen:
+If RStudio is not installed on your computer, you can create a free account on [_posit.cloud_](https://posit.cloud/). Create the account with your credentials and **follow the instructions to create a new project**. Once done, you should see something like this on your screen:
 
 <center>
 
@@ -120,6 +120,7 @@ The analyses that we are going to conduct require specific **packages**. In R, *
 # Install packages from Bioconductor
 if (!require("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
+BiocManager::install()
 
 # Install packages from CRAN
 install.packages("tidyr")
@@ -136,6 +137,7 @@ install.packages("hexbin")
 install.packages("pheatmap")
 install.packages("RColorBrewer")
 install.packages("ggrepel")
+install.packages("ggpubr")
 
 # For conversion between gene IDs
 BiocManager::install("org.Hs.eg.db")
@@ -172,15 +174,32 @@ no
 Hopefully all packages were correctly installed and now we can dive a bit deeper into the theoretical basics of RNA sequencing!
 
 # Introduction to bulk RNA-seq
-With bulk RNA sequencing technologies, the goal is to capture **average gene expression levels** across pooled cell populations of interest. This is achieved by capturing all RNA transcripts from a sample and sequencing them in an automated way to ensure the adequate throughput needed for answering the biological hypotheses behind the experiment. 
+With bulk RNA sequencing technologies, the goal is to capture **average gene expression levels** across pooled cell populations of interest. This is achieved by capturing all RNA transcripts from a sample and sequencing them in an automated way to ensure the adequate throughput needed for answering the biological hypotheses behind the experiment. The main limitation of bulk RNA-seq is that we lose the ability to distinguish between gene expression profiles of rare cell populations.
+
+> 🤔 What are the key differences between RNA sequencing and qPCR?
+
+## Why bulk RNA sequencing?
+The motivations behind an RNA sequencing experiment can be summarized between gathering a set of both **quantitative** but also **qualitative** observations.
+
+
+| Quantitative 	| Qualitative 	|
+|---	|---	|
+| Identify _differentially expressed_ genes 	| _Annotate_ transcripts 	| 
+| Detect different _Isoform_	expression | _Alternative splicing_ analysis	|
+|  	| Identify _gene fusion_ events |
+
+
+<center>
+
+<img src="https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/assets/rnaseq_transcription.svg" width=600 />
+
+</center>
+
 
 ## Experimental Workflow
 
 A bulk RNA-seq experiment is articulated in the following steps:
 
-:::: {align="center" style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 20px; "}
-
-::: {align="left"}
 - **Experimental design**: sample choice and hypothesis
 
 - **RNA extraction**
@@ -195,25 +214,121 @@ A bulk RNA-seq experiment is articulated in the following steps:
 
 - **Data analysis**: extract meaningful biological insights
 
-:::
-
-::: {}
-
-<img src="https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/assets/rnaseq_workflow.svg" width=450 />
-
-:::
-
-::::
-
-> 💡 But why would we look at mRNAs at all? Why not DNA or proteins? As always, the short answer is "_it depends..._"
 
 <center>
 
-<img src="https://nbisweden.github.io/workshop-ngsintro/2403/topics/rnaseq/assets/rnaseq_transcription.svg" width=600 />
+<img src="../pics/rnaseq_protocol.png" width=750 />
 
 </center>
 
-## Next Generation Sequencing
+## How can we design a bulk RNA-seq experiment?
+A well thought-out experimental design is a crucial factor in achieving success. The best strategy will primarily depend on the experiment's goals, the hypotheses being tested, and the type of data expected to be obtained.
+
+### Replicates
+Replication is a key part of the scientific method and bulk RNA-seq experiments are no exception to the norm. Guideline suggest to perform 2-5 replicates for each condition of interest!
+
+> 🤔 Do you know what the differences between a _technical_ and _biological_ replicates are?
+
+
+<center>
+
+<img src="../pics/replicates.png" width=600 />
+
+</center>
+
+
+**Technical Replicates**: use the _same_ biological specimen (sample) from the _same_ experimental condition to repeat the technical or experimental steps in order to accurately measure technical variation and remove it during analysis. These are normally dispensable given the low technical variation with NGS technologies.
+
+**Biological Replicates**: use _different_ biological samples of the _same_ condition to measure the biological variation between samples. Of key importance for the analysis. The higher the number of biological replicates, the more precise the estimate of average gene expression. They’re even more important than sequencing depth in defining differentially expressed genes with confidence.
+
+### Avoiding _batch_ effects!
+Batch effect refers to the **unwanted variability** in data that arises due to differences in how samples are processed, handled, or analyzed across different experimental batches or conditions, rather than being due to the biological variation of interest. 
+
+Sources of batch effect can arise from: 
+
+- sample collection strategies
+- processing differences 
+- equipment and instrumentation
+- library preparation time
+- sequencing time
+
+> 💡 If you cannot avoid batch effects, do not confound you experiment by batch but instead **randomize samples across batches**!
+
+What follows is a basic yet intuitive visualization of what the above phrase means in practice... in a **poorly-designed** experiment:
+
+<center>
+
+<img src="../pics/confounded_design.png" width=500 />
+
+</center>
+
+And in a **well-designed** experiment with following analyses in mind:
+
+<center>
+
+<img src="../pics/non_confounded_design.png" width=500 />
+
+</center>
+
+This approach ensures that any potential batch effects — such as differences in RNA extraction, handling, or processing — are equally represented in both the control and treatment groups, thereby helping to **isolate biological variation from technical noise**.
+
+**e.g** If you need to extract RNA in two batches due to the number of samples, avoid extracting only control samples in one batch and only treated samples in the second one. Doing so could introduce batch-specific technical variations that would make it difficult to differentiate between true biological differences and technical artifacts. Instead, ensure that you equally distribute control and treated samples across both batches. 
+
+> 🤔 Could you think about another example of how to avoid batch effect in your experimental set up?
+
+## How do we go from mRNA to sequences?
+
+### Gathering RNA from cells
+The first step is of course to materially extract RNA molecules from our set of cells of interest! 
+
+Most commonly used extraction methods are **organic extraction methods** (phenol-containing solutions) or **filter-based** (membranes). 
+Then, in order to _eliminate DNA contamination_ in your sample and increase RNA purity, DNAse treatment is performed. Certain forms of contamination can be detected using UV spectroscopy and the calculation of absorbance ratios. Good quality RNA will have an A260/280 ratio of 1.7 to 2.1 and A260/230 of 2.0 to 2.2. A260/280 lower than 1.7 may indicate protein contamination, whereas A260/230 less than 1.8 may indicate the presence of organics (e.g. phenol or guanidine) leftover from the extraction protocol.
+
+> 🚨 Degradation of RNA breaks up long RNA molecules into shorter fragments, that are more difficult to assemble bioinformatically, and therefore RNA sequence information can be lost! 
+
+Following that, RNA is quantified and its integrity evaluated (by agarose gel electrophoresis or by _Bioanalyzer_ or Tape station). With both methods you should recognize the most abundant RNAs in our cells: the ribosomal subunits 18S and 28S (that should be twice 18S). The image below shows 3 bioanalyzer profiles at decreasing levels of **RIN** (RNA Integrity Number).
+
+<center>
+
+<img src="../pics/bioanalyzer.png" width=350 />
+
+</center>
+
+> 🤔 Based on what we’ve said about batch effects, would you use the same RNA extraction protocol or different ones for your samples?
+
+### Interested in different species of RNA?
+As we know RNA can come in many forms and functions, so depending on your research interest, you might be prompted to look at specific RNA species over others. This means that we need to **enrich** for specific sets of RNA molecules among the many ones that cells produce to function! Below we can find a series of protocols optimized to capture different RNA species:
+
+| Method 	| Application 	| Limitations |
+|---	|---	|---	|
+| Poly(A) selection 	| mRNA sequencing | Excludes non-polyadenilated species (rRNAs, tRNAs) 	|
+| rRNA Depletion 	| mRNA, small RNAs and lncRNAs 	| Can reduce total RNA yield	|
+| Total RNA-seq 	| Comprehensive transcriptome analysis 	| High rRNA content and reduced overall sensitivity	|
+| miRNA Enrichment 	| Small RNA sequencing (miRNAs, snoRNAs, etc.)	| Excludes large RNAs, and only focuses on small RNA species	|
+| Capture-based Enrichment 	| Targeted RNA sequencing 	| Only focuses on specific sequences, not suitable for global analysis	|
+
+### Producing a _library_
+Starting from our precious mRNA molecule that has been isolated from our sample, we transform it into DNA by means of _retrotranscription_, this process creates what is known as **cDNA**. cDNA molecules can be very large and due to technical constraints we need to fragment them into smaller pieces. All these pieces are then ligated to a set of sequences known as **adapters**. 
+
+<center>
+
+<img src="https://raw.githubusercontent.com/NBISweden/workshop-ngsintro/a4d8e1da73bc2a6997c350c52deb4b377e3df2e8/topics/rnaseq/assets/rnaseq_library_prep.svg" width=300 />
+
+</center>
+
+Importantly, Since there are many genomic regions that generate transcripts from both strands, **identifying the polarity of a given transcript** provides essential information about the possible function of a gene. 
+
+However, in canonical **NON-STRANDED** library preparation random primers are used for first- and second-strand synthesis of cDNA. The resulting sequencing products from the two antisense transcripts are identical and cannot be distinguished when sequenced. Thus, information about directionality is lost during cDNA synthesis. 
+
+<center>
+
+<img src="../pics/stranded.png" width=800 />
+
+</center>
+
+On the contrary, **STRAND-SPECIFIC** library preparation distinguishes the first and second strands of cDNA by incorporating uracil instead of thymine to label the second strand. After adapter ligation, amplification of the second strand is blocked. This can be accomplished by performing uracil-specific digestion before amplification or by using a DNA polymerase that is unable to amplify uracil-containing templates. As a result, all sequencing products from a particular RNA molecule will have the same orientation.
+
+### Next Generation Sequencing
 Next Generation Sequencing technologies (Illumina/PacBio) allow experimenters to capture the entire genetic information in a sample in a completely unsupervised manner. The process works with an approach called **sequencing-by-synthesis** or SBS for short. 
 
 > 💡
@@ -227,15 +342,23 @@ This means that **strands are sequenced by re-building them** using the natural 
 
 </center>
 
-## How do we go from mRNA to sequences?
+As we have seen in the video, adapter sequences are used by the sequencing machine to hybridize cDNA fragments to the flow cell and form sequencing clusters.
+
+A few key parameters to consider when using NGS technologies (and this holds true for all involved _omics_ approaches) include:
+
+- **Sequencing Depth**: as the name suggests, this represents the final objective in terms of number of reads obained in the experiment, we can go shallow for a quick snapshot of highly expressed genes (5 to 30 million reads), or very deep to catch that rarely expressed variant we are interested in (150 to 200 million reads)!
+
+- **Read Length**: this is another parameter set by the operator and determines the amount of snapshots we take of the flowcell with its clusters after each hibridization round determining "how far into" the cDNA molecule we look (typically 50 to 75 bp) - longer reads are useful is we are aiming for novel transcript assembly and isoform identification.
+
+- **Sequencing Mode**: we can either sequence our library from one side in _single-end_ mode or from both sides of each insert using _paired-end_ sequencing which generates two reads per fragment. The latter is more expensive but fondamental for the detection of gene isoforms since we get more information.
 
 <center>
 
-<img src="https://raw.githubusercontent.com/NBISweden/workshop-ngsintro/a4d8e1da73bc2a6997c350c52deb4b377e3df2e8/topics/rnaseq/assets/rnaseq_library_prep.svg" width=400 />
+<img src="../pics/se_vs_pe.png" width=600 />
 
 </center>
 
-Starting from our precious mRNA molecule that has been isolated from our sample, we transform it into DNA by means of _retrotranscription_, this process creates what is known as **cDNA**. cDNA molecules can be very large and due to technical constraints we need to fragment them into smaller pieces. All these pieces are then ligated to a set of sequences known as **adapters**. As we have seen in the video, adapter sequences are used by the sequencing machine to hibridize cDNA fragments to the flow cell and form sequencing clusters.
+> 💡 Additional information and guidelines on sequencing depth and read lenght can be found on [ENCODE Consortium](https://genome.ucsc.edu/ENCODE/)'s website!
 
 ## Raw Sequencing Output
 The **raw output** of any sequencing run consists of a series of sequences (called **_reads_**). These sequences can have varying length based on the run parameters set on the sequencing platform. Nevertheless, **they are made available for humans to read under a standardized file format known as FASTQ**. This is the universally accepted format used to encode sequences after sequencing. An example of real FASTQ file with only two **_reads_** is provided below.
@@ -414,12 +537,9 @@ head(counts, 10) %>% kbl() %>% kable_styling()
 
 We can then check the shape of our counts table (i.e. how many different transcripts we are detecting and how many different samples?)
 
-```{r}
-# How many rows and columns does our count table have?
-dim(counts)
-```
+> 🤔 How many rows are we expecting to be present in our counts table? _hint_: think of the type of experiment and the readout we are expecting!
 
-We can see that our table contains count information for `r dim(counts)[1]` genes and `r dim(counts)[2]` samples. 
+We can see that our table contains count information for `r dim(counts)[2]` samples. 
 
 > 💡
 > **In R, these table object are called `data.frames`, `tibbles` are just like them but with some improved functionalities provided by the [`tidyverse`](https://www.tidyverse.org/) library.**
@@ -500,3 +620,24 @@ samples <- read.table("samples_table.csv", sep = ",")
 > **We will also repeat this procedure with the results of the differential expression analysis in order to avoid repeating work we have already done in case of any trouble!**
 
 Now that we have our objects correctly loaded, we can dive into the actual RNA-seq analysis.
+
+# Recap 
+We can summarize today's class using an important set of questions to consider when you'll be designing your own RNA-seq experiment:
+
+1.	How many replicates do I need?
+2.	How can I minimize batch effect?
+3.	How should I isolate RNA?
+4.	Are RNA purity and quantity adequate? 
+5.	Which kind of RNA enrichment should I use?
+6.	Do I need a stranded library preparation?
+7.	What read length and depth should I use?
+
+Let's also go through what we have seen so far:
+
+- Got a broad understanding of what the term "_bioinformatics_" means
+- Familiarized with the concept of computer programs and programming languages (like `R`)
+- Got a refresh on the basic concepts behind the bulk RNA-seq workflow and its applications
+- Initialized our _analysis environment_ using Posit
+- Familiarized a bit with the `R` interface
+- Downloaded bulk RNA-seq data from CD8+ T cell subpopulations
+- Learned the importance of exploring experimental metadata
