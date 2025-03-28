@@ -37,6 +37,6 @@ You will have 5 minutes to organize into groups of approximately the same size, 
     - If a bioinformatician will perform the analysis of your samples, what **metadata** should you provide to ensure a well-informed and accurate analysis?
     - Do you believe incorporating the analysis of **other -OMICS** will enhance your experiment? If yes, which ones?
 
-4. Create a 1-2 slide presentation to communicate how you would go about planning your project! (_remember_: you are trying to convince your boss to spend a lot of 💸)
+4. Create a 1-2 slides presentation to communicate how you would go about planning your project! (_remember_: you are trying to convince your boss to spend a lot of 💸)
 
 5. Present your work! (nice and easy 🤙🏼)
